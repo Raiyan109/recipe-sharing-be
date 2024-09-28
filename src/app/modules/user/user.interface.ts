@@ -8,10 +8,10 @@ export type TUser = {
     phone: string;
     role: 'admin' | 'user';
     address: string;
-    photo: string;
-    bio: string;
+    photo?: string;
+    bio?: string;
     membership: 'free' | 'premium'
-    followers: string[];
+    followers?: string[];
 }
 
 export type TLoginUser = {

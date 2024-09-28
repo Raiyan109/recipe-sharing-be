@@ -29,11 +29,9 @@ const userSchema = new Schema<TUser, UserModel>({
     },
     photo: {
         type: String,
-        required: true
     },
     bio: {
         type: String,
-        required: true
     },
     membership: {
         type: String,
@@ -41,7 +39,6 @@ const userSchema = new Schema<TUser, UserModel>({
     },
     followers: {
         type: [String],
-        required: true
     },
 }, { timestamps: true })
 // , {
