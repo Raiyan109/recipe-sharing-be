@@ -37,9 +37,12 @@ const userSchema = new Schema<TUser, UserModel>({
         type: String,
         required: true
     },
-    followers: {
-        type: [String],
-    },
+    following: [{
+        type: Schema.Types.ObjectId, ref: 'Follow'
+    }],
+    followers: [{
+        type: Schema.Types.ObjectId, ref: 'Follow'
+    }],
 }, { timestamps: true })
 // , {
 //     toJSON: {

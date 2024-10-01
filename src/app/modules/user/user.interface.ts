@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { USER_ROLE } from "./user.constant";
 
 export type TUser = {
@@ -11,7 +11,8 @@ export type TUser = {
     photo?: string;
     bio?: string;
     membership: 'free' | 'premium'
-    followers?: string[];
+    following?: Types.ObjectId;
+    followers?: Types.ObjectId;
 }
 
 export type TLoginUser = {
