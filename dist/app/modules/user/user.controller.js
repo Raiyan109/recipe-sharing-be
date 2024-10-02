@@ -17,6 +17,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const user_service_1 = require("./user.service");
+const AppError_1 = __importDefault(require("../../errors/AppError"));
 const signUp = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_service_1.UserServices.createUserIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
@@ -51,9 +52,23 @@ const forgetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+    if (!token) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Token does not exist !');
+    }
+    const result = yield user_service_1.UserServices.resetPassword(req.body, token);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Password reset successfully!',
+        data: result,
+    });
+}));
 const getUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
+    var _b, _c;
+    const userId = (_c = (_b = req.user) === null || _b === void 0 ? void 0 : _b.userId) === null || _c === void 0 ? void 0 : _c._id;
     const result = yield user_service_1.UserServices.getUserFromDB(userId);
     (0, sendResponse_1.default)(res, {
         success: true,
@@ -66,5 +81,6 @@ exports.UserControllers = {
     signUp,
     loginUser,
     forgetPassword,
-    getUser
+    getUser,
+    resetPassword
 };

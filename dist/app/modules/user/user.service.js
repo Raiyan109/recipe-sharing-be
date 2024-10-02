@@ -19,6 +19,8 @@ const user_model_1 = require("./user.model");
 const user_utils_1 = require("./user.utils");
 const config_1 = __importDefault(require("../../config"));
 const sendEmail_1 = require("../../utils/sendEmail");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let user = yield user_model_1.User.create(payload);
@@ -65,7 +67,29 @@ const forgetPassword = (userEmail) => __awaiter(void 0, void 0, void 0, function
     };
     const resetToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwt_secret, '10m');
     const resetUILink = `${config_1.default.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`;
+    console.log(resetUILink);
     (0, sendEmail_1.sendEmail)(user.email, resetUILink);
+});
+const resetPassword = (payload, token) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.isUserExistsByEmail(payload.email);
+    if (!user) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user does not exist !');
+    }
+    const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_secret);
+    if (payload.email !== decoded.userId.email) {
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'You are forbidden');
+    }
+    // Hash new password
+    const saltRounds = 10;
+    const newHashedPassword = yield bcrypt_1.default.hash(payload.newPassword, saltRounds);
+    yield user_model_1.User.findOneAndUpdate({
+        email: decoded.userId.email,
+        role: decoded.userId.role
+    }, {
+        password: newHashedPassword,
+        passwordChangedAt: new Date()
+    });
+    console.log(decoded);
 });
 const getUserFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.findOne({ _id: payload });
@@ -75,5 +99,6 @@ exports.UserServices = {
     createUserIntoDB,
     login,
     forgetPassword,
-    getUserFromDB
+    getUserFromDB,
+    resetPassword
 };

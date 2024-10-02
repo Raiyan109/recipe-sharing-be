@@ -13,6 +13,7 @@ export type TUser = {
     membership: 'free' | 'premium'
     following?: Types.ObjectId;
     followers?: Types.ObjectId;
+    passwordChangedAt?: Date;
 }
 
 export type TLoginUser = {

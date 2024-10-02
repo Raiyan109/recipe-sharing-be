@@ -56,6 +56,9 @@ const userSchema = new mongoose_1.Schema({
     followers: [{
             type: mongoose_1.Schema.Types.ObjectId, ref: 'Follow'
         }],
+    passwordChangedAt: {
+        type: Date,
+    },
 }, { timestamps: true });
 // , {
 //     toJSON: {

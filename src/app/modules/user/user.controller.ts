@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
+import AppError from "../../errors/AppError";
 
 const signUp = catchAsync(async (req, res) => {
     const result = await UserServices.createUserIntoDB(req.body)
@@ -42,6 +43,21 @@ const forgetPassword = catchAsync(async (req, res) => {
         data: result,
     });
 });
+const resetPassword = catchAsync(async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+        throw new AppError(httpStatus.NOT_FOUND, 'Token does not exist !');
+    }
+
+    const result = await UserServices.resetPassword(req.body, token);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Password reset successfully!',
+        data: result,
+    });
+});
 
 const getUser = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
@@ -59,5 +75,6 @@ export const UserControllers = {
     signUp,
     loginUser,
     forgetPassword,
-    getUser
+    getUser,
+    resetPassword
 }

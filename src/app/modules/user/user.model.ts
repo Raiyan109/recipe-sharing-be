@@ -43,6 +43,9 @@ const userSchema = new Schema<TUser, UserModel>({
     followers: [{
         type: Schema.Types.ObjectId, ref: 'Follow'
     }],
+    passwordChangedAt: {
+        type: Date,
+    },
 }, { timestamps: true })
 // , {
 //     toJSON: {
