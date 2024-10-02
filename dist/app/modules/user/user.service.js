@@ -18,6 +18,7 @@ const AppError_1 = __importDefault(require("../../errors/AppError"));
 const user_model_1 = require("./user.model");
 const user_utils_1 = require("./user.utils");
 const config_1 = __importDefault(require("../../config"));
+const sendEmail_1 = require("../../utils/sendEmail");
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let user = yield user_model_1.User.create(payload);
@@ -62,9 +63,9 @@ const forgetPassword = (userEmail) => __awaiter(void 0, void 0, void 0, function
         userId: user,
         role: user.role,
     };
-    const accessToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwt_secret, '10m');
-    const resetUILink = `http://localhost:3000?email=${user.email}&token=${accessToken}`;
-    console.log(resetUILink);
+    const resetToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwt_secret, '10m');
+    const resetUILink = `${config_1.default.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`;
+    (0, sendEmail_1.sendEmail)(user.email, resetUILink);
 });
 const getUserFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.findOne({ _id: payload });

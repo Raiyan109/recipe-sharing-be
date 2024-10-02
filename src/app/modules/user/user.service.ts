@@ -4,6 +4,7 @@ import { TLoginUser, TUser } from "./user.interface";
 import { User } from './user.model'
 import { createToken } from "./user.utils";
 import config from "../../config";
+import { sendEmail } from "../../utils/sendEmail";
 
 const createUserIntoDB = async (payload: TUser) => {
     try {
@@ -65,14 +66,15 @@ const forgetPassword = async (userEmail: string) => {
         role: user.role,
     };
 
-    const accessToken = createToken(
+    const resetToken = createToken(
         jwtPayload,
         config.jwt_secret as string,
         '10m',
     );
 
-    const resetUILink = `http://localhost:3000?email=${user.email}&token=${accessToken}`
-    console.log(resetUILink);
+    const resetUILink = `${config.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`
+
+    sendEmail(user.email, resetUILink)
 
 };
 
