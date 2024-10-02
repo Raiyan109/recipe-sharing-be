@@ -22,8 +22,15 @@ const getSingleRecipeFromDB = async (id: string) => {
     return result
 }
 
+const getRecipesByUserFromDB = async (userId: string) => {
+
+    const result = await RecipeModel.find({ user: userId }).populate('user')
+    return result;
+};
+
 export const RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
-    getSingleRecipeFromDB
+    getSingleRecipeFromDB,
+    getRecipesByUserFromDB
 }

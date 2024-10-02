@@ -32,8 +32,13 @@ const getSingleRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function
     const result = yield recipe_model_1.RecipeModel.findById(id);
     return result;
 });
+const getRecipesByUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield recipe_model_1.RecipeModel.find({ user: userId }).populate('user');
+    return result;
+});
 exports.RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
-    getSingleRecipeFromDB
+    getSingleRecipeFromDB,
+    getRecipesByUserFromDB
 };

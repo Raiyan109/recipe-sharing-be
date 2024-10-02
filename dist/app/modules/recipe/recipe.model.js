@@ -23,6 +23,11 @@ const recipeSchema = new mongoose_1.Schema({
         type: String,
         enum: ['free', 'premium'],
         required: true
-    }
+    },
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: 'User',
+        // required: true
+    },
 }, { timestamps: true });
 exports.RecipeModel = (0, mongoose_1.model)('Recipe', recipeSchema);

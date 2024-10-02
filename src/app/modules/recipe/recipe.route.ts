@@ -13,6 +13,12 @@ router.post(
     RecipeControllers.createRecipe,
 );
 
+router.get(
+    '/user',
+    auth('user'),
+    RecipeControllers.getRecipesByUser,
+);
+
 // router.put(
 //     '/:id',
 //     // auth('admin'),

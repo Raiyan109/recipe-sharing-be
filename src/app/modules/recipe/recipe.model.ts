@@ -23,7 +23,12 @@ const recipeSchema = new Schema<TRecipe>({
         type: String,
         enum: ['free', 'premium'],
         required: true
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        // required: true
+    },
 }, { timestamps: true })
 
 export const RecipeModel = model<TRecipe>('Recipe', recipeSchema)

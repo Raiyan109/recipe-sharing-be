@@ -54,8 +54,29 @@ const getSingleRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
         data: result,
     });
 }));
+const getRecipesByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
+    const result = yield recipe_service_1.RecipeServices.getRecipesByUserFromDB(userId);
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return (0, sendResponse_1.default)(res, {
+            success: false,
+            statusCode: http_status_1.default.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Recipes retrieved successfully',
+        data: result,
+    });
+}));
 exports.RecipeControllers = {
     createRecipe,
     getAllRecipes,
-    getSingleRecipe
+    getSingleRecipe,
+    getRecipesByUser
 };
