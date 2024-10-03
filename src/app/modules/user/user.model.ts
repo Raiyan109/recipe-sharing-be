@@ -33,6 +33,10 @@ const userSchema = new Schema<TUser, UserModel>({
     bio: {
         type: String,
     },
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
     membership: {
         type: String,
         required: true

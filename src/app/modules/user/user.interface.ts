@@ -10,6 +10,7 @@ export type TUser = {
     address: string;
     photo?: string;
     bio?: string;
+    isBlocked: boolean;
     membership: 'free' | 'premium'
     following?: Types.ObjectId;
     followers?: Types.ObjectId;
