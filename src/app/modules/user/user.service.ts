@@ -123,11 +123,16 @@ const getUserFromDB = async (payload: TUser) => {
     return user
 };
 
+const getAllUsersFromDB = async () => {
+    const user = await User.find()
+    return user
+};
 
 export const UserServices = {
     createUserIntoDB,
     login,
     forgetPassword,
     getUserFromDB,
-    resetPassword
+    resetPassword,
+    getAllUsersFromDB
 }

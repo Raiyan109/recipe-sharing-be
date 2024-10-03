@@ -95,10 +95,15 @@ const getUserFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* (
     const user = yield user_model_1.User.findOne({ _id: payload });
     return user;
 });
+const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.find();
+    return user;
+});
 exports.UserServices = {
     createUserIntoDB,
     login,
     forgetPassword,
     getUserFromDB,
-    resetPassword
+    resetPassword,
+    getAllUsersFromDB
 };

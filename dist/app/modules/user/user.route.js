@@ -21,4 +21,5 @@ router.post('/reset-password',
 // validateRequest(AuthValidation.forgetPasswordValidationSchema),
 user_controller_1.UserControllers.resetPassword);
 router.get('/user', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getUser);
+router.get('/', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getAllUsers);
 exports.UserRoutes = router;

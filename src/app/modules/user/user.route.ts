@@ -33,4 +33,6 @@ router.post(
 
 router.get('/user', auth('user', 'admin'), UserControllers.getUser)
 
+router.get('/', auth('user', 'admin'), UserControllers.getAllUsers)
+
 export const UserRoutes = router;

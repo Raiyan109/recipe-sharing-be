@@ -3,6 +3,13 @@ import AppError from "../../errors/AppError";
 import { TRecipe } from "./recipe.interface";
 import { RecipeModel } from "./recipe.model";
 
+type CategoryItem = {
+    _id: string;
+    image: string;
+    title: string;
+    category: string[];
+};
+
 const createRecipeIntoDB = async (recipe: TRecipe) => {
     const isRecipeExists = await RecipeModel.findOne({ name: recipe.title })
     if (isRecipeExists) {

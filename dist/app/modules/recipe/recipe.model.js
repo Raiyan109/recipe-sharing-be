@@ -29,5 +29,9 @@ const recipeSchema = new mongoose_1.Schema({
         ref: 'User',
         // required: true
     },
+    category: {
+        type: [String],
+        required: true
+    },
 }, { timestamps: true });
 exports.RecipeModel = (0, mongoose_1.model)('Recipe', recipeSchema);

@@ -71,10 +71,22 @@ const getUser = catchAsync(async (req, res) => {
     });
 })
 
+const getAllUsers = catchAsync(async (req, res) => {
+    const result = await UserServices.getAllUsersFromDB()
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Users retrieved successfully',
+        data: result,
+    });
+})
+
 export const UserControllers = {
     signUp,
     loginUser,
     forgetPassword,
     getUser,
-    resetPassword
+    resetPassword,
+    getAllUsers
 }

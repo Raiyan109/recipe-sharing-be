@@ -25,11 +25,11 @@ const createRecipeIntoDB = (recipe) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const getAllRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_model_1.RecipeModel.find();
+    const result = yield recipe_model_1.RecipeModel.find().populate('user');
     return result;
 });
 const getSingleRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_model_1.RecipeModel.findById(id);
+    const result = yield recipe_model_1.RecipeModel.findById(id).populate('user');
     return result;
 });
 const getRecipesByUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
