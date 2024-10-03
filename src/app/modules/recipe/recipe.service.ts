@@ -13,12 +13,12 @@ const createRecipeIntoDB = async (recipe: TRecipe) => {
 }
 
 const getAllRecipesFromDB = async () => {
-    const result = await RecipeModel.find()
+    const result = await RecipeModel.find().populate('user')
     return result;
 };
 
 const getSingleRecipeFromDB = async (id: string) => {
-    const result = await RecipeModel.findById(id)
+    const result = await RecipeModel.findById(id).populate('user')
     return result
 }
 

@@ -7,4 +7,5 @@ export type TRecipe = {
     rating: string;
     contentAvailability: 'free' | 'premium'
     user: Types.ObjectId;
+    category: [string];
 } 
