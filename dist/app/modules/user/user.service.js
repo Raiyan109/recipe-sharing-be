@@ -36,6 +36,11 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     if (!user) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user does not exist !');
     }
+    const userIsBlocked = user.isBlocked;
+    if (userIsBlocked === true) {
+        console.log('this user is blocked');
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This user is blocked ! !');
+    }
     //checking if the password is correct
     if (!(yield user_model_1.User.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, user === null || user === void 0 ? void 0 : user.password)))
         throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'Password do not matched');

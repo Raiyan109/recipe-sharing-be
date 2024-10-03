@@ -26,6 +26,14 @@ const login = async (payload: TLoginUser) => {
         throw new AppError(httpStatus.NOT_FOUND, 'This user does not exist !');
     }
 
+    const userIsBlocked = user.isBlocked
+
+    if (userIsBlocked === true) {
+        console.log('this user is blocked');
+        throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
+
+    }
+
     //checking if the password is correct
     if (!(await User.isPasswordMatched(payload?.password, user?.password)))
         throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
