@@ -14,6 +14,11 @@ router.post(
 );
 
 router.get(
+    '/categories',
+    RecipeControllers.getAllCategories,
+);
+
+router.get(
     '/user',
     auth('user'),
     RecipeControllers.getRecipesByUser,

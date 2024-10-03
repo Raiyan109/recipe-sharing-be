@@ -19,6 +19,25 @@ const createRecipeIntoDB = async (recipe: TRecipe) => {
     return result
 }
 
+const getAllCategoriesFromDB = async (): Promise<CategoryItem[]> => {
+    const result: CategoryItem[] = await RecipeModel.find({}, { category: 1, image: 1, title: 1, _id: 1 });
+
+    const uniqueCategories: CategoryItem[] = [];
+    const categorySet = new Set<string>();
+
+
+    result.forEach(item => {
+        const category = item.category[0]; // Extract the single category string from the array
+        if (!categorySet.has(category)) {
+            categorySet.add(category);
+            uniqueCategories.push(item);
+        }
+    });
+
+    return uniqueCategories;
+};
+
+
 const getAllRecipesFromDB = async () => {
     const result = await RecipeModel.find().populate('user')
     return result;
@@ -39,5 +58,6 @@ export const RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
     getSingleRecipeFromDB,
-    getRecipesByUserFromDB
+    getRecipesByUserFromDB,
+    getAllCategoriesFromDB
 }

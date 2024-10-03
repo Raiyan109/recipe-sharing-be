@@ -11,6 +11,7 @@ const router = express_1.default.Router();
 router.post('/', 
 // auth('admin'),
 recipe_controller_1.RecipeControllers.createRecipe);
+router.get('/categories', recipe_controller_1.RecipeControllers.getAllCategories);
 router.get('/user', (0, auth_1.default)('user'), recipe_controller_1.RecipeControllers.getRecipesByUser);
 // router.put(
 //     '/:id',

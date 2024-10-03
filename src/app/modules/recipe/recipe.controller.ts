@@ -15,6 +15,27 @@ const createRecipe = catchAsync(async (req, res) => {
     });
 });
 
+const getAllCategories = catchAsync(async (req, res) => {
+    const result = await RecipeServices.getAllCategoriesFromDB();
+
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Categories retrieved successfully',
+        data: result,
+    });
+});
+
 const getAllRecipes = catchAsync(async (req, res) => {
     const result = await RecipeServices.getAllRecipesFromDB();
 
@@ -76,5 +97,6 @@ export const RecipeControllers = {
     createRecipe,
     getAllRecipes,
     getSingleRecipe,
-    getRecipesByUser
+    getRecipesByUser,
+    getAllCategories
 }

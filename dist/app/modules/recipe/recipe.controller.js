@@ -26,6 +26,24 @@ const createRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result,
     });
 }));
+const getAllCategories = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield recipe_service_1.RecipeServices.getAllCategoriesFromDB();
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return (0, sendResponse_1.default)(res, {
+            success: false,
+            statusCode: http_status_1.default.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Categories retrieved successfully',
+        data: result,
+    });
+}));
 const getAllRecipes = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield recipe_service_1.RecipeServices.getAllRecipesFromDB();
     // Check if the database collection is empty or no matching data is found
@@ -78,5 +96,6 @@ exports.RecipeControllers = {
     createRecipe,
     getAllRecipes,
     getSingleRecipe,
-    getRecipesByUser
+    getRecipesByUser,
+    getAllCategories
 };

@@ -38,7 +38,6 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const userIsBlocked = user.isBlocked;
     if (userIsBlocked === true) {
-        console.log('this user is blocked');
         throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This user is blocked ! !');
     }
     //checking if the password is correct

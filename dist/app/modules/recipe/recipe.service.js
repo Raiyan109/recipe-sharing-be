@@ -24,6 +24,19 @@ const createRecipeIntoDB = (recipe) => __awaiter(void 0, void 0, void 0, functio
     const result = yield recipe_model_1.RecipeModel.create(recipe);
     return result;
 });
+const getAllCategoriesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield recipe_model_1.RecipeModel.find({}, { category: 1, image: 1, title: 1, _id: 1 });
+    const uniqueCategories = [];
+    const categorySet = new Set();
+    result.forEach(item => {
+        const category = item.category[0]; // Extract the single category string from the array
+        if (!categorySet.has(category)) {
+            categorySet.add(category);
+            uniqueCategories.push(item);
+        }
+    });
+    return uniqueCategories;
+});
 const getAllRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield recipe_model_1.RecipeModel.find().populate('user');
     return result;
@@ -40,5 +53,6 @@ exports.RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
     getSingleRecipeFromDB,
-    getRecipesByUserFromDB
+    getRecipesByUserFromDB,
+    getAllCategoriesFromDB
 };
