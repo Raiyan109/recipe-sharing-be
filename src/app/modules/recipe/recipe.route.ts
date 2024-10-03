@@ -24,6 +24,8 @@ router.get(
     RecipeControllers.getRecipesByUser,
 );
 
+router.delete('/:id', auth('user'), RecipeControllers.deleteRecipe);
+
 // router.put(
 //     '/:id',
 //     // auth('admin'),

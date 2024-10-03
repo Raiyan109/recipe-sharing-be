@@ -54,10 +54,21 @@ const getRecipesByUserFromDB = async (userId: string) => {
     return result;
 };
 
+const deleteRecipeFromDB = async (id: string) => {
+    const result = await RecipeModel.findByIdAndDelete(
+        id,
+        {
+            new: true,
+        },
+    );
+    return result;
+};
+
 export const RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
     getSingleRecipeFromDB,
     getRecipesByUserFromDB,
-    getAllCategoriesFromDB
+    getAllCategoriesFromDB,
+    deleteRecipeFromDB
 }
