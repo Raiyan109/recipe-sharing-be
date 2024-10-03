@@ -118,6 +118,21 @@ const updateUserIsBlockedIntoDB = (id, payload) => __awaiter(void 0, void 0, voi
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update user block status');
     }
 });
+const updateProfileIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updatedProfile = yield user_model_1.User.findByIdAndUpdate(id, payload, {
+            new: true,
+            runValidators: true,
+        });
+        if (!updatedProfile) {
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update profile');
+        }
+        return updatedProfile;
+    }
+    catch (error) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update profile');
+    }
+});
 exports.UserServices = {
     createUserIntoDB,
     login,
@@ -125,5 +140,6 @@ exports.UserServices = {
     getUserFromDB,
     resetPassword,
     getAllUsersFromDB,
-    updateUserIsBlockedIntoDB
+    updateUserIsBlockedIntoDB,
+    updateProfileIntoDB
 };

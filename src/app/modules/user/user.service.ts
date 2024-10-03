@@ -151,6 +151,23 @@ const updateUserIsBlockedIntoDB = async (id: string, payload: Partial<TUser>) =>
     }
 };
 
+const updateProfileIntoDB = async (id: string, payload: Partial<TUser>) => {
+    try {
+        const updatedProfile = await User.findByIdAndUpdate(id, payload, {
+            new: true,
+            runValidators: true,
+        })
+
+        if (!updatedProfile) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update profile');
+        }
+
+        return updatedProfile
+    } catch (error) {
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update profile');
+    }
+};
+
 
 export const UserServices = {
     createUserIntoDB,
@@ -159,5 +176,6 @@ export const UserServices = {
     getUserFromDB,
     resetPassword,
     getAllUsersFromDB,
-    updateUserIsBlockedIntoDB
+    updateUserIsBlockedIntoDB,
+    updateProfileIntoDB
 }

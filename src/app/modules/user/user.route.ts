@@ -14,6 +14,13 @@ router.put(
     UserControllers.updateUserIsBlocked,
 );
 
+router.put(
+    '/updateProfile/:id',
+    auth('admin', 'user'),
+    UserControllers.updateProfile,
+);
+
+
 
 router.post(
     '/signup',
