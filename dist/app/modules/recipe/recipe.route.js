@@ -14,13 +14,6 @@ recipe_controller_1.RecipeControllers.createRecipe);
 router.get('/categories', recipe_controller_1.RecipeControllers.getAllCategories);
 router.get('/user', (0, auth_1.default)('user'), recipe_controller_1.RecipeControllers.getRecipesByUser);
 router.delete('/:id', (0, auth_1.default)('user'), recipe_controller_1.RecipeControllers.deleteRecipe);
-// router.put(
-//     '/:id',
-//     // auth('admin'),
-//     validateRequest(FacilityValidations.updateFacilityValidationSchema),
-//     FacilityControllers.updateFacility,
-// );
-// router.delete('/:id', auth('admin'), FacilityControllers.deleteFacility);
 router.get('/:id', 
 // auth('user', 'admin'),
 recipe_controller_1.RecipeControllers.getSingleRecipe);

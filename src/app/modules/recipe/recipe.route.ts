@@ -26,15 +26,6 @@ router.get(
 
 router.delete('/:id', auth('user'), RecipeControllers.deleteRecipe);
 
-// router.put(
-//     '/:id',
-//     // auth('admin'),
-//     validateRequest(FacilityValidations.updateFacilityValidationSchema),
-//     FacilityControllers.updateFacility,
-// );
-
-// router.delete('/:id', auth('admin'), FacilityControllers.deleteFacility);
-
 router.get(
     '/:id',
     // auth('user', 'admin'),

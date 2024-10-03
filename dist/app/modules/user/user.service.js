@@ -70,7 +70,8 @@ const forgetPassword = (userEmail) => __awaiter(void 0, void 0, void 0, function
         role: user.role,
     };
     const resetToken = (0, user_utils_1.createToken)(jwtPayload, config_1.default.jwt_secret, '10m');
-    const resetUILink = `${config_1.default.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`;
+    // const resetUILink = `${config.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`
+    const resetUILink = `${config_1.default.reset_pass_ui_link}/reset-password?email=${user.email}&token=${resetToken}`;
     console.log(resetUILink);
     (0, sendEmail_1.sendEmail)(user.email, resetUILink);
 });
