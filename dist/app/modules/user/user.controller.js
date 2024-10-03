@@ -86,11 +86,22 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result,
     });
 }));
+const updateUserIsBlocked = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield user_service_1.UserServices.updateUserIsBlockedIntoDB(id, req.body);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'User block status updated successfully',
+        data: result,
+    });
+}));
 exports.UserControllers = {
     signUp,
     loginUser,
     forgetPassword,
     getUser,
     resetPassword,
-    getAllUsers
+    getAllUsers,
+    updateUserIsBlocked
 };

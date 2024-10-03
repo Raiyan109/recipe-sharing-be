@@ -82,11 +82,25 @@ const getAllUsers = catchAsync(async (req, res) => {
     });
 })
 
+const updateUserIsBlocked = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await UserServices.updateUserIsBlockedIntoDB(id, req.body);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'User block status updated successfully',
+        data: result,
+    });
+});
+
+
 export const UserControllers = {
     signUp,
     loginUser,
     forgetPassword,
     getUser,
     resetPassword,
-    getAllUsers
+    getAllUsers,
+    updateUserIsBlocked
 }

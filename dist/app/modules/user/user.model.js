@@ -46,6 +46,10 @@ const userSchema = new mongoose_1.Schema({
     bio: {
         type: String,
     },
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
     membership: {
         type: String,
         required: true

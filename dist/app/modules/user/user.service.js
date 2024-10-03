@@ -99,11 +99,27 @@ const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.find();
     return user;
 });
+const updateUserIsBlockedIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const isBlockedStatus = yield user_model_1.User.findByIdAndUpdate(id, payload, {
+            new: true,
+            runValidators: true,
+        });
+        if (!isBlockedStatus) {
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update user block status');
+        }
+        return isBlockedStatus;
+    }
+    catch (error) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update user block status');
+    }
+});
 exports.UserServices = {
     createUserIntoDB,
     login,
     forgetPassword,
     getUserFromDB,
     resetPassword,
-    getAllUsersFromDB
+    getAllUsersFromDB,
+    updateUserIsBlockedIntoDB
 };

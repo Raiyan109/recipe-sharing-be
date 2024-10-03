@@ -7,6 +7,14 @@ import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
+
+router.put(
+    '/:id',
+    auth('admin'),
+    UserControllers.updateUserIsBlocked,
+);
+
+
 router.post(
     '/signup',
     // validateRequest(UserValidations.userValidationSchema),

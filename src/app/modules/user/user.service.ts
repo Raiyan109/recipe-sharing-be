@@ -128,11 +128,30 @@ const getAllUsersFromDB = async () => {
     return user
 };
 
+const updateUserIsBlockedIntoDB = async (id: string, payload: Partial<TUser>) => {
+    try {
+        const isBlockedStatus = await User.findByIdAndUpdate(id, payload, {
+            new: true,
+            runValidators: true,
+        })
+
+        if (!isBlockedStatus) {
+            throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update user block status');
+        }
+
+        return isBlockedStatus
+    } catch (error) {
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update user block status');
+    }
+};
+
+
 export const UserServices = {
     createUserIntoDB,
     login,
     forgetPassword,
     getUserFromDB,
     resetPassword,
-    getAllUsersFromDB
+    getAllUsersFromDB,
+    updateUserIsBlockedIntoDB
 }
