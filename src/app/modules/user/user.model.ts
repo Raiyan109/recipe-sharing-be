@@ -41,12 +41,18 @@ const userSchema = new Schema<TUser, UserModel>({
         type: String,
         required: true
     },
-    following: [{
-        type: Schema.Types.ObjectId, ref: 'Follow'
-    }],
-    followers: [{
-        type: Schema.Types.ObjectId, ref: 'Follow'
-    }],
+    following: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Follow'
+        }
+    ],
+    followers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Follow'
+        }
+    ],
     passwordChangedAt: {
         type: Date,
     },

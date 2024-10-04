@@ -55,6 +55,7 @@ const forgetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+    console.log(token, 'from resetpassword controller');
     if (!token) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Token does not exist !');
     }

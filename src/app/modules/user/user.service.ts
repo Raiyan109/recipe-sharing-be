@@ -62,66 +62,76 @@ const login = async (payload: TLoginUser) => {
 };
 
 const forgetPassword = async (userEmail: string) => {
+    try {
+        const user = await User.isUserExistsByEmail(userEmail)
 
-    const user = await User.isUserExistsByEmail(userEmail)
+        if (!user) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This user does not exist !');
+        }
 
-    if (!user) {
-        throw new AppError(httpStatus.NOT_FOUND, 'This user does not exist !');
+        const jwtPayload = {
+            userId: user,
+            role: user.role,
+        };
+
+        const resetToken = createToken(
+            jwtPayload,
+            config.jwt_secret as string,
+            '10m',
+        );
+
+        // const resetUILink = `${config.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`
+
+        const resetUILink = `${config.reset_pass_ui_link}/reset-password?email=${user.email}&token=${resetToken}`
+        console.log(resetUILink, 'resetUILink', user.email, 'use email');
+
+
+        sendEmail(user.email, resetUILink)
+    } catch (error) {
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to send reset link');
     }
-
-    const jwtPayload = {
-        userId: user,
-        role: user.role,
-    };
-
-    const resetToken = createToken(
-        jwtPayload,
-        config.jwt_secret as string,
-        '10m',
-    );
-
-    // const resetUILink = `${config.reset_pass_ui_link}?email=${user.email}&token=${resetToken}`
-
-    const resetUILink = `${config.reset_pass_ui_link}/reset-password?email=${user.email}&token=${resetToken}`
-    console.log(resetUILink);
-
-
-    sendEmail(user.email, resetUILink)
 
 };
 
 
 const resetPassword = async (payload: { email: string, newPassword: string }, token: string) => {
-    const user = await User.isUserExistsByEmail(payload.email)
+    try {
+        const user = await User.isUserExistsByEmail(payload.email)
 
-    if (!user) {
-        throw new AppError(httpStatus.NOT_FOUND, 'This user does not exist !');
+        if (!user) {
+            throw new AppError(httpStatus.NOT_FOUND, 'This user does not exist !');
+        }
+
+        const decoded = jwt.verify(
+            token,
+            config.jwt_secret as string,
+        ) as JwtPayload;
+
+        console.log(decoded, 'from resetPassword');
+
+
+        if (payload.email !== decoded.userId.email) {
+            throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden')
+        }
+
+        // Hash new password
+        const saltRounds = 10
+        const newHashedPassword = await bcrypt.hash(
+            payload.newPassword, saltRounds
+        );
+
+        await User.findOneAndUpdate({
+            email: decoded.userId.email,
+            role: decoded.userId.role
+        }, {
+            password: newHashedPassword,
+            passwordChangedAt: new Date()
+        })
+
+        console.log(decoded, 'decoded from user.service reset');
+    } catch (error) {
+        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to reset password');
     }
-
-    const decoded = jwt.verify(
-        token,
-        config.jwt_secret as string,
-    ) as JwtPayload;
-
-    if (payload.email !== decoded.userId.email) {
-        throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden')
-    }
-
-    // Hash new password
-    const saltRounds = 10
-    const newHashedPassword = await bcrypt.hash(
-        payload.newPassword, saltRounds
-    );
-
-    await User.findOneAndUpdate({
-        email: decoded.userId.email,
-        role: decoded.userId.role
-    }, {
-        password: newHashedPassword,
-        passwordChangedAt: new Date()
-    })
-
-    console.log(decoded);
 
 
 };

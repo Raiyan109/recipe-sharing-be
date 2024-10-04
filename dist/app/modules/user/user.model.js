@@ -54,12 +54,18 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    following: [{
-            type: mongoose_1.Schema.Types.ObjectId, ref: 'Follow'
-        }],
-    followers: [{
-            type: mongoose_1.Schema.Types.ObjectId, ref: 'Follow'
-        }],
+    following: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: 'Follow'
+        }
+    ],
+    followers: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: 'Follow'
+        }
+    ],
     passwordChangedAt: {
         type: Date,
     },
