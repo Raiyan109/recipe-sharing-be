@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 const user_controller_1 = require("./user.controller");
 const auth_1 = __importDefault(require("../../middlewares/auth"));
 const router = express_1.default.Router();
+router.get('/user', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getUser);
 router.put('/:id', (0, auth_1.default)('admin'), user_controller_1.UserControllers.updateUserIsBlocked);
 router.put('/updateProfile/:id', (0, auth_1.default)('admin', 'user'), user_controller_1.UserControllers.updateProfile);
 router.get('/:id', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getSingleUser);
@@ -23,6 +24,5 @@ user_controller_1.UserControllers.forgetPassword);
 router.post('/reset-password', 
 // validateRequest(AuthValidation.forgetPasswordValidationSchema),
 user_controller_1.UserControllers.resetPassword);
-router.get('/user', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getUser);
 router.get('/', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getAllUsers);
 exports.UserRoutes = router;

@@ -21,6 +21,8 @@ const followUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     var _a, _b;
     const followerId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
     const { followeeId } = req.params;
+    console.log(followerId, 'follower id from controller');
+    console.log(followeeId, 'followee id from controller');
     const result = yield follow_service_1.FollowServices.followUser(followerId, followeeId);
     (0, sendResponse_1.default)(res, {
         success: true,

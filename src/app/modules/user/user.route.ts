@@ -7,6 +7,7 @@ import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
+router.get('/user', auth('user', 'admin'), UserControllers.getUser)
 
 router.put(
     '/:id',
@@ -50,7 +51,7 @@ router.post(
     UserControllers.resetPassword,
 );
 
-router.get('/user', auth('user', 'admin'), UserControllers.getUser)
+
 
 router.get('/', auth('user', 'admin'), UserControllers.getAllUsers)
 

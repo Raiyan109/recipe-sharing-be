@@ -6,6 +6,9 @@ import { FollowServices } from "./follow.service";
 const followUser = catchAsync(async (req, res) => {
     const followerId = req.user?.userId?._id
     const { followeeId } = req.params;
+    console.log(followerId, 'follower id from controller');
+    console.log(followeeId, 'followee id from controller');
+
 
     const result = await FollowServices.followUser(followerId, followeeId)
 
