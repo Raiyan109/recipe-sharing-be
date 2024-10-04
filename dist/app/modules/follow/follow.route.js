@@ -12,4 +12,6 @@ const router = express_1.default.Router();
 router.post('/:followeeId', (0, auth_1.default)('user', 'admin'), follow_controller_1.FollowControllers.followUser);
 // Unfollow a user
 router.delete('/unFollow/:followeeId', (0, auth_1.default)('user', 'admin'), follow_controller_1.FollowControllers.unFollowUser);
+// Get a list of followers of a user
+router.get('/:id/followers', follow_controller_1.FollowControllers.getFollowers);
 exports.FollowRoutes = router;

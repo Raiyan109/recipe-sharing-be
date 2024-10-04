@@ -6,8 +6,6 @@ import { FollowServices } from "./follow.service";
 const followUser = catchAsync(async (req, res) => {
     const followerId = req.user?.userId?._id
     const { followeeId } = req.params;
-    console.log(followerId, 'follower id from controller');
-    console.log(followeeId, 'followee id from controller');
 
     const result = await FollowServices.followUser(followerId, followeeId)
 
@@ -33,7 +31,22 @@ const unFollowUser = catchAsync(async (req, res) => {
     });
 })
 
+const getFollowers = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+
+    const result = await FollowServices.getFollowers(id)
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Followers list retrieved successfully',
+        data: result,
+    });
+})
+
 export const FollowControllers = {
     followUser,
-    unFollowUser
+    unFollowUser,
+    getFollowers
 }

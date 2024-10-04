@@ -14,4 +14,5 @@ const followSchema = new Schema<TFollow>({
     }
 }, { timestamps: true })
 
+
 export const FollowModel = model<TFollow>('Follow', followSchema)
