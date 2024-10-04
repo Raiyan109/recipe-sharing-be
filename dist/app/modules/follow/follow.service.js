@@ -42,8 +42,16 @@ const getFollowers = (userId) => __awaiter(void 0, void 0, void 0, function* () 
     const followers = yield follow_model_1.FollowModel.find({ followee: userId }).populate('follower');
     return followers.map((follow) => follow.follower);
 });
+/**
+ * Get list of following users for a user
+ */
+const getFollowing = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const following = yield follow_model_1.FollowModel.find({ follower: userId }).populate('followee');
+    return following.map((follow) => follow.followee);
+});
 exports.FollowServices = {
     followUser,
     unFollowUser,
-    getFollowers
+    getFollowers,
+    getFollowing
 };

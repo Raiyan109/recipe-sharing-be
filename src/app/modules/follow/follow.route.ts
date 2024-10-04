@@ -14,4 +14,7 @@ router.delete('/unFollow/:followeeId', auth('user', 'admin'), FollowControllers.
 // Get a list of followers of a user
 router.get('/:id/followers', FollowControllers.getFollowers);
 
+// Get a list of users a user is following
+router.get('/:id/following', FollowControllers.getFollowing);
+
 export const FollowRoutes = router;

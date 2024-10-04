@@ -52,8 +52,30 @@ const getFollowers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result,
     });
 }));
+// Get the list of users that a user is following
+const getFollowing = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        console.log(id);
+        const result = yield follow_service_1.FollowServices.getFollowing(id);
+        (0, sendResponse_1.default)(res, {
+            success: true,
+            statusCode: http_status_1.default.OK,
+            message: 'Following list retrieved successfully',
+            data: result,
+        });
+    }
+    catch (error) {
+        (0, sendResponse_1.default)(res, {
+            success: false,
+            statusCode: http_status_1.default.CONFLICT,
+            message: 'Something went wrong while getting following list',
+        });
+    }
+}));
 exports.FollowControllers = {
     followUser,
     unFollowUser,
-    getFollowers
+    getFollowers,
+    getFollowing
 };

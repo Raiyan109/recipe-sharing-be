@@ -14,4 +14,6 @@ router.post('/:followeeId', (0, auth_1.default)('user', 'admin'), follow_control
 router.delete('/unFollow/:followeeId', (0, auth_1.default)('user', 'admin'), follow_controller_1.FollowControllers.unFollowUser);
 // Get a list of followers of a user
 router.get('/:id/followers', follow_controller_1.FollowControllers.getFollowers);
+// Get a list of users a user is following
+router.get('/:id/following', follow_controller_1.FollowControllers.getFollowing);
 exports.FollowRoutes = router;

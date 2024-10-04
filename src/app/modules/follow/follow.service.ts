@@ -38,8 +38,17 @@ const getFollowers = async (userId: string) => {
     return followers.map((follow) => follow.follower);
 };
 
+/**
+ * Get list of following users for a user
+ */
+const getFollowing = async (userId: string) => {
+    const following = await FollowModel.find({ follower: userId }).populate('followee');
+    return following.map((follow) => follow.followee);
+};
+
 export const FollowServices = {
     followUser,
     unFollowUser,
-    getFollowers
+    getFollowers,
+    getFollowing
 }
