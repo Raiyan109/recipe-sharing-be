@@ -22,6 +22,12 @@ const followUser = (followerId, followeeId) => __awaiter(void 0, void 0, void 0,
     yield user_model_1.User.findByIdAndUpdate(followeeId, { $push: { followers: followerId } });
     return follow;
 });
+const unFollowUser = (followerId, followeeId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield follow_model_1.FollowModel.deleteOne({ follower: followerId, followee: followeeId });
+    yield user_model_1.User.findByIdAndUpdate(followerId, { $pull: { following: followeeId } });
+    yield user_model_1.User.findByIdAndUpdate(followeeId, { $pull: { followers: followerId } });
+});
 exports.FollowServices = {
-    followUser
+    followUser,
+    unFollowUser
 };

@@ -16,6 +16,14 @@ const followUser = async (followerId: Types.ObjectId, followeeId: string): Promi
     return follow;
 };
 
+const unFollowUser = async (followerId: Types.ObjectId, followeeId: string): Promise<void> => {
+    await FollowModel.deleteOne({ follower: followerId, followee: followeeId });
+
+    await User.findByIdAndUpdate(followerId, { $pull: { following: followeeId } });
+    await User.findByIdAndUpdate(followeeId, { $pull: { followers: followerId } });
+};
+
 export const FollowServices = {
-    followUser
+    followUser,
+    unFollowUser
 }

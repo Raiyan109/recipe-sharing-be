@@ -8,4 +8,7 @@ const router = express.Router();
 // Follow a user
 router.post('/:followeeId', auth('user', 'admin'), FollowControllers.followUser);
 
+// Unfollow a user
+router.delete('/unFollow/:followeeId', auth('user', 'admin'), FollowControllers.unFollowUser);
+
 export const FollowRoutes = router;

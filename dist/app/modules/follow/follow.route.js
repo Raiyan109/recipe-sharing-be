@@ -10,4 +10,6 @@ const auth_1 = __importDefault(require("../../middlewares/auth"));
 const router = express_1.default.Router();
 // Follow a user
 router.post('/:followeeId', (0, auth_1.default)('user', 'admin'), follow_controller_1.FollowControllers.followUser);
+// Unfollow a user
+router.delete('/unFollow/:followeeId', (0, auth_1.default)('user', 'admin'), follow_controller_1.FollowControllers.unFollowUser);
 exports.FollowRoutes = router;
