@@ -115,6 +115,10 @@ const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.find();
     return user;
 });
+const getSingleUserFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findById(id).select('-role -membership -password');
+    return result;
+});
 const updateUserIsBlockedIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isBlockedStatus = yield user_model_1.User.findByIdAndUpdate(id, payload, {
@@ -153,5 +157,6 @@ exports.UserServices = {
     resetPassword,
     getAllUsersFromDB,
     updateUserIsBlockedIntoDB,
-    updateProfileIntoDB
+    updateProfileIntoDB,
+    getSingleUserFromDB
 };

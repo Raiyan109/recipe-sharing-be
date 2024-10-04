@@ -84,6 +84,17 @@ const getAllUsers = catchAsync(async (req, res) => {
     });
 })
 
+const getSingleUser = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await UserServices.getSingleUserFromDB(id)
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Single User retrieved successfully',
+        data: result,
+    });
+})
+
 const updateUserIsBlocked = catchAsync(async (req, res) => {
     const { id } = req.params;
     const result = await UserServices.updateUserIsBlockedIntoDB(id, req.body);
@@ -117,5 +128,6 @@ export const UserControllers = {
     resetPassword,
     getAllUsers,
     updateUserIsBlocked,
-    updateProfile
+    updateProfile,
+    getSingleUser
 }

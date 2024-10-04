@@ -20,7 +20,11 @@ router.put(
     UserControllers.updateProfile,
 );
 
-
+router.get(
+    '/:id',
+    auth('user', 'admin'),
+    UserControllers.getSingleUser,
+);
 
 router.post(
     '/signup',

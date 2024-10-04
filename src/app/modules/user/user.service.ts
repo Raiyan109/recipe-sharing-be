@@ -146,6 +146,11 @@ const getAllUsersFromDB = async () => {
     return user
 };
 
+const getSingleUserFromDB = async (id: string) => {
+    const result = await User.findById(id).select('-role -membership -password')
+    return result
+}
+
 const updateUserIsBlockedIntoDB = async (id: string, payload: Partial<TUser>) => {
     try {
         const isBlockedStatus = await User.findByIdAndUpdate(id, payload, {
@@ -189,5 +194,6 @@ export const UserServices = {
     resetPassword,
     getAllUsersFromDB,
     updateUserIsBlockedIntoDB,
-    updateProfileIntoDB
+    updateProfileIntoDB,
+    getSingleUserFromDB
 }
