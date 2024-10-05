@@ -15,10 +15,20 @@ const recipeSchema = new Schema<TRecipe>({
         type: String,
         required: true
     },
-    rating: {
-        type: String,
-        required: true
-    },
+    reviews: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            },
+            rating: {
+                type: Number
+            },
+            comment: {
+                type: String
+            },
+        }
+    ],
     contentAvailability: {
         type: String,
         enum: ['free', 'premium'],
