@@ -109,7 +109,8 @@ const updateUserIsBlocked = (0, catchAsync_1.default)((req, res) => __awaiter(vo
 }));
 const updateProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield user_service_1.UserServices.updateProfileIntoDB(id, req.body);
+    const { name, email, bio, password, phone, address, photo } = req.body;
+    const result = yield user_service_1.UserServices.updateProfileIntoDB(id, { name, email, bio, password, phone, address, photo });
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: http_status_1.default.OK,

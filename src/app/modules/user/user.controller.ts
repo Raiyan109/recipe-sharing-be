@@ -109,7 +109,9 @@ const updateUserIsBlocked = catchAsync(async (req, res) => {
 
 const updateProfile = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const result = await UserServices.updateProfileIntoDB(id, req.body);
+    const { name, email, bio, password, phone, address, photo } = req.body
+
+    const result = await UserServices.updateProfileIntoDB(id, { name, email, bio, password, phone, address, photo });
 
     sendResponse(res, {
         success: true,

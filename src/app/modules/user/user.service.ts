@@ -169,8 +169,26 @@ const updateUserIsBlockedIntoDB = async (id: string, payload: Partial<TUser>) =>
 };
 
 const updateProfileIntoDB = async (id: string, payload: Partial<TUser>) => {
+    const { name, email, bio, password, phone, address, photo } = payload
+
+    let updateData: Partial<TUser> = {
+        name,
+        email,
+        bio,
+        phone,
+        address,
+        photo,
+    };
+
+    // Only hash and update password if it's provided
+    if (password) {
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+        updateData.password = passwordHash;
+    }
+
     try {
-        const updatedProfile = await User.findByIdAndUpdate(id, payload, {
+        const updatedProfile = await User.findByIdAndUpdate(id, updateData, {
             new: true,
             runValidators: true,
         })

@@ -135,8 +135,23 @@ const updateUserIsBlockedIntoDB = (id, payload) => __awaiter(void 0, void 0, voi
     }
 });
 const updateProfileIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name, email, bio, password, phone, address, photo } = payload;
+    let updateData = {
+        name,
+        email,
+        bio,
+        phone,
+        address,
+        photo,
+    };
+    // Only hash and update password if it's provided
+    if (password) {
+        const salt = yield bcrypt_1.default.genSalt();
+        const passwordHash = yield bcrypt_1.default.hash(password, salt);
+        updateData.password = passwordHash;
+    }
     try {
-        const updatedProfile = yield user_model_1.User.findByIdAndUpdate(id, payload, {
+        const updatedProfile = yield user_model_1.User.findByIdAndUpdate(id, updateData, {
             new: true,
             runValidators: true,
         });
