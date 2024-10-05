@@ -15,10 +15,20 @@ const recipeSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    rating: {
-        type: String,
-        required: true
-    },
+    reviews: [
+        {
+            user: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+            rating: {
+                type: Number
+            },
+            comment: {
+                type: String
+            },
+        }
+    ],
     contentAvailability: {
         type: String,
         enum: ['free', 'premium'],

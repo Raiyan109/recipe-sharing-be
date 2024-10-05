@@ -13,6 +13,12 @@ router.post(
     RecipeControllers.createRecipe,
 );
 
+router.post(
+    '/:recipeId/review',
+    auth('user', 'admin'),
+    RecipeControllers.addReview,
+);
+
 router.get(
     '/categories',
     RecipeControllers.getAllCategories,

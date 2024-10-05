@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-import { TRecipe } from "./recipe.interface";
+import { IReview, TRecipe } from "./recipe.interface";
 import { RecipeModel } from "./recipe.model";
 
 type CategoryItem = {
@@ -40,6 +40,10 @@ const getAllCategoriesFromDB = async (): Promise<CategoryItem[]> => {
 
 const getAllRecipesFromDB = async () => {
     const result = await RecipeModel.find().populate('user')
+        .populate({
+            path: 'reviews.user',
+            select: 'name photo _id',
+        })
     return result;
 };
 
@@ -64,11 +68,34 @@ const deleteRecipeFromDB = async (id: string) => {
     return result;
 };
 
+const addReviewIntoRecipe = async (recipeId: string, userId: string, payload: IReview) => {
+    const recipe = await RecipeModel.findById(recipeId)
+
+    if (!recipe) {
+        throw new AppError(httpStatus.FORBIDDEN, 'This recipe does not exists!');
+    }
+
+    const reviewData = {
+        user: userId,
+        rating: payload.rating,
+        comment: payload.comment,
+    };
+
+    // Push the review into the `reviews` array
+    recipe.reviews?.push(reviewData);
+
+    // Save the updated recipe
+    const result = await recipe.save();  // Use save to update the existing document
+
+    return result;
+}
+
 export const RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
     getSingleRecipeFromDB,
     getRecipesByUserFromDB,
     getAllCategoriesFromDB,
-    deleteRecipeFromDB
+    deleteRecipeFromDB,
+    addReviewIntoRecipe
 }

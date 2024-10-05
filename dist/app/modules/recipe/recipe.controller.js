@@ -102,11 +102,24 @@ const deleteRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result,
     });
 }));
+const addReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c, _d;
+    const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.userId) === null || _d === void 0 ? void 0 : _d._id;
+    const { recipeId } = req.params;
+    const result = yield recipe_service_1.RecipeServices.addReviewIntoRecipe(recipeId, userId, req.body);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Review added successfully',
+        data: result,
+    });
+}));
 exports.RecipeControllers = {
     createRecipe,
     getAllRecipes,
     getSingleRecipe,
     getRecipesByUser,
     getAllCategories,
-    deleteRecipe
+    deleteRecipe,
+    addReview
 };

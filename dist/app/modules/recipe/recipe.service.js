@@ -38,7 +38,11 @@ const getAllCategoriesFromDB = () => __awaiter(void 0, void 0, void 0, function*
     return uniqueCategories;
 });
 const getAllRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_model_1.RecipeModel.find().populate('user');
+    const result = yield recipe_model_1.RecipeModel.find().populate('user')
+        .populate({
+        path: 'reviews.user',
+        select: 'name photo _id',
+    });
     return result;
 });
 const getSingleRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,11 +59,29 @@ const deleteRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function* (
     });
     return result;
 });
+const addReviewIntoRecipe = (recipeId, userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const recipe = yield recipe_model_1.RecipeModel.findById(recipeId);
+    if (!recipe) {
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This recipe does not exists!');
+    }
+    const reviewData = {
+        user: userId,
+        rating: payload.rating,
+        comment: payload.comment,
+    };
+    // Push the review into the `reviews` array
+    (_a = recipe.reviews) === null || _a === void 0 ? void 0 : _a.push(reviewData);
+    // Save the updated recipe
+    const result = yield recipe.save(); // Use save to update the existing document
+    return result;
+});
 exports.RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
     getSingleRecipeFromDB,
     getRecipesByUserFromDB,
     getAllCategoriesFromDB,
-    deleteRecipeFromDB
+    deleteRecipeFromDB,
+    addReviewIntoRecipe
 };

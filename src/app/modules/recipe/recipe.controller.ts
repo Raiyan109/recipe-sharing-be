@@ -104,6 +104,21 @@ const deleteRecipe = catchAsync(async (req, res) => {
     });
 });
 
+const addReview = catchAsync(async (req, res) => {
+    const userId = req.user?.userId?._id
+    const { recipeId } = req.params;
+
+
+    const result = await RecipeServices.addReviewIntoRecipe(recipeId, userId, req.body);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Review added successfully',
+        data: result,
+    });
+})
+
 
 export const RecipeControllers = {
     createRecipe,
@@ -111,5 +126,6 @@ export const RecipeControllers = {
     getSingleRecipe,
     getRecipesByUser,
     getAllCategories,
-    deleteRecipe
+    deleteRecipe,
+    addReview
 }
