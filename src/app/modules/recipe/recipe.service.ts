@@ -90,6 +90,28 @@ const addReviewIntoRecipe = async (recipeId: string, userId: string, payload: IR
     return result;
 }
 
+const addUpvoteIntoRecipe = async (userId: string, recipeId: string) => {
+    const upvote = await RecipeModel.findByIdAndUpdate(recipeId, {
+        $push: {
+            votes: userId
+        }
+    }, {
+        new: true
+    })
+    return upvote
+}
+
+const addDownvoteIntoRecipe = async (userId: string, recipeId: string) => {
+    const downvote = await RecipeModel.findByIdAndUpdate(recipeId, {
+        $pull: {
+            votes: userId
+        }
+    }, {
+        new: true
+    })
+    return downvote
+}
+
 export const RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
@@ -97,5 +119,7 @@ export const RecipeServices = {
     getRecipesByUserFromDB,
     getAllCategoriesFromDB,
     deleteRecipeFromDB,
-    addReviewIntoRecipe
+    addReviewIntoRecipe,
+    addUpvoteIntoRecipe,
+    addDownvoteIntoRecipe
 }

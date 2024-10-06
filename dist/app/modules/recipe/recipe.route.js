@@ -8,6 +8,8 @@ const express_1 = __importDefault(require("express"));
 const auth_1 = __importDefault(require("../../middlewares/auth"));
 const recipe_controller_1 = require("./recipe.controller");
 const router = express_1.default.Router();
+router.put('/:recipeId/upvote', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.upvote);
+router.put('/:recipeId/downvote', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.downvote);
 router.post('/', 
 // auth('admin'),
 recipe_controller_1.RecipeControllers.createRecipe);

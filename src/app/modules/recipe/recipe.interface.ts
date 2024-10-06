@@ -14,5 +14,5 @@ export type TRecipe = {
     contentAvailability: 'free' | 'premium'
     user: Types.ObjectId;
     category: [string];
-    likes: [string]
+    votes: [string]
 } 

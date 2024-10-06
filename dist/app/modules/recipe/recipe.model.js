@@ -43,7 +43,7 @@ const recipeSchema = new mongoose_1.Schema({
         type: [String],
         required: true
     },
-    likes: [
+    votes: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
             ref: 'User',

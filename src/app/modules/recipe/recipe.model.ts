@@ -43,7 +43,7 @@ const recipeSchema = new Schema<TRecipe>({
         type: [String],
         required: true
     },
-    likes: [
+    votes: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User',

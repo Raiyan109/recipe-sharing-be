@@ -119,6 +119,36 @@ const addReview = catchAsync(async (req, res) => {
     });
 })
 
+const upvote = catchAsync(async (req, res) => {
+    const userId = req.user?.userId?._id
+    const { recipeId } = req.params;
+
+
+    const result = await RecipeServices.addUpvoteIntoRecipe(userId, recipeId);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Upvote added successfully',
+        data: result,
+    });
+})
+
+const downvote = catchAsync(async (req, res) => {
+    const userId = req.user?.userId?._id
+    const { recipeId } = req.params;
+
+
+    const result = await RecipeServices.addDownvoteIntoRecipe(userId, recipeId);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Downvote added successfully',
+        data: result,
+    });
+})
+
 
 export const RecipeControllers = {
     createRecipe,
@@ -127,5 +157,7 @@ export const RecipeControllers = {
     getRecipesByUser,
     getAllCategories,
     deleteRecipe,
-    addReview
+    addReview,
+    upvote,
+    downvote
 }

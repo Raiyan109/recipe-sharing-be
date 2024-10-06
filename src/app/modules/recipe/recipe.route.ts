@@ -7,6 +7,19 @@ import { RecipeControllers } from './recipe.controller';
 
 const router = express.Router();
 
+
+router.put(
+    '/:recipeId/upvote',
+    auth('user', 'admin'),
+    RecipeControllers.upvote,
+);
+
+router.put(
+    '/:recipeId/downvote',
+    auth('user', 'admin'),
+    RecipeControllers.downvote,
+);
+
 router.post(
     '/',
     // auth('admin'),

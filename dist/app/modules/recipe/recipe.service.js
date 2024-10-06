@@ -75,6 +75,26 @@ const addReviewIntoRecipe = (recipeId, userId, payload) => __awaiter(void 0, voi
     const result = yield recipe.save(); // Use save to update the existing document
     return result;
 });
+const addUpvoteIntoRecipe = (userId, recipeId) => __awaiter(void 0, void 0, void 0, function* () {
+    const upvote = yield recipe_model_1.RecipeModel.findByIdAndUpdate(recipeId, {
+        $push: {
+            votes: userId
+        }
+    }, {
+        new: true
+    });
+    return upvote;
+});
+const addDownvoteIntoRecipe = (userId, recipeId) => __awaiter(void 0, void 0, void 0, function* () {
+    const downvote = yield recipe_model_1.RecipeModel.findByIdAndUpdate(recipeId, {
+        $pull: {
+            votes: userId
+        }
+    }, {
+        new: true
+    });
+    return downvote;
+});
 exports.RecipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
@@ -82,5 +102,7 @@ exports.RecipeServices = {
     getRecipesByUserFromDB,
     getAllCategoriesFromDB,
     deleteRecipeFromDB,
-    addReviewIntoRecipe
+    addReviewIntoRecipe,
+    addUpvoteIntoRecipe,
+    addDownvoteIntoRecipe
 };

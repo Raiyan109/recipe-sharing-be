@@ -114,6 +114,30 @@ const addReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         data: result,
     });
 }));
+const upvote = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _e, _f;
+    const userId = (_f = (_e = req.user) === null || _e === void 0 ? void 0 : _e.userId) === null || _f === void 0 ? void 0 : _f._id;
+    const { recipeId } = req.params;
+    const result = yield recipe_service_1.RecipeServices.addUpvoteIntoRecipe(userId, recipeId);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Upvote added successfully',
+        data: result,
+    });
+}));
+const downvote = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _g, _h;
+    const userId = (_h = (_g = req.user) === null || _g === void 0 ? void 0 : _g.userId) === null || _h === void 0 ? void 0 : _h._id;
+    const { recipeId } = req.params;
+    const result = yield recipe_service_1.RecipeServices.addDownvoteIntoRecipe(userId, recipeId);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Downvote added successfully',
+        data: result,
+    });
+}));
 exports.RecipeControllers = {
     createRecipe,
     getAllRecipes,
@@ -121,5 +145,7 @@ exports.RecipeControllers = {
     getRecipesByUser,
     getAllCategories,
     deleteRecipe,
-    addReview
+    addReview,
+    upvote,
+    downvote
 };
