@@ -43,5 +43,11 @@ const recipeSchema = new mongoose_1.Schema({
         type: [String],
         required: true
     },
+    likes: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: 'User',
+        }
+    ]
 }, { timestamps: true });
 exports.RecipeModel = (0, mongoose_1.model)('Recipe', recipeSchema);

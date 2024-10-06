@@ -39,11 +39,11 @@ const getAllCategoriesFromDB = async (): Promise<CategoryItem[]> => {
 
 
 const getAllRecipesFromDB = async () => {
-    const result = await RecipeModel.find().populate('user')
-        .populate({
-            path: 'reviews.user',
-            select: 'name photo _id',
-        })
+    const result = await RecipeModel.find().populate('user').populate({
+        path: 'reviews.user',
+        select: 'name photo _id',
+    })
+
     return result;
 };
 

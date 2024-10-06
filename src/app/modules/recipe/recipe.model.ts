@@ -43,6 +43,12 @@ const recipeSchema = new Schema<TRecipe>({
         type: [String],
         required: true
     },
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        }
+    ]
 }, { timestamps: true })
 
 export const RecipeModel = model<TRecipe>('Recipe', recipeSchema)

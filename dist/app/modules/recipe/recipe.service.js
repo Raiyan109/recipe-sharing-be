@@ -38,8 +38,7 @@ const getAllCategoriesFromDB = () => __awaiter(void 0, void 0, void 0, function*
     return uniqueCategories;
 });
 const getAllRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_model_1.RecipeModel.find().populate('user')
-        .populate({
+    const result = yield recipe_model_1.RecipeModel.find().populate('user').populate({
         path: 'reviews.user',
         select: 'name photo _id',
     });
