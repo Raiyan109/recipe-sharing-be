@@ -67,7 +67,7 @@ const getSingleRecipeFromDB = async (id: string) => {
     return result
 }
 
-const getRecipesByUserFromDB = async (userId: string, query: string = '', page: number = 1, limit: number = 2) => {
+const getRecipesByUserFromDB = async (userId: string, query: string = '', page: number = 1, limit: number = 10) => {
 
     const searchFilter = query
         ? {

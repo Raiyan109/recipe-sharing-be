@@ -70,7 +70,7 @@ const getSingleRecipe = catchAsync(async (req, res) => {
 
 const getRecipesByUser = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
-    const { query = "", page = "1", limit = "2" } = req.query;
+    const { query = "", page = "1", limit = "10" } = req.query;
 
     const result = await RecipeServices.getRecipesByUserFromDB(userId, query as string, parseInt(page as string), parseInt(limit as string));
 
