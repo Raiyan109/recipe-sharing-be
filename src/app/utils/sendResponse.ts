@@ -1,11 +1,18 @@
 import { Response } from 'express';
 
+type TMeta = {
+    total: number;
+    currentPage: number;
+    totalPages: number;
+}
+
 type TResponse<T> = {
     success: boolean;
     message?: string;
     statusCode: number;
     token?: string;
     data?: T;
+    meta?: TMeta;
 };
 
 const sendResponse = <T>(res: Response, data: TResponse<T>) => {
@@ -15,6 +22,7 @@ const sendResponse = <T>(res: Response, data: TResponse<T>) => {
         message: data.message,
         token: data.token,
         data: data.data,
+        meta: data.meta
     });
 };
 

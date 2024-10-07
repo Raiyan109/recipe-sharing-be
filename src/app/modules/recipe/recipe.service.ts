@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { IReview, TRecipe } from "./recipe.interface";
 import { RecipeModel } from "./recipe.model";
+import { Types } from "mongoose";
 
 type CategoryItem = {
     _id: string;
@@ -66,10 +67,31 @@ const getSingleRecipeFromDB = async (id: string) => {
     return result
 }
 
-const getRecipesByUserFromDB = async (userId: string) => {
+const getRecipesByUserFromDB = async (userId: string, query: string = '', page: number = 1, limit: number = 10) => {
 
-    const result = await RecipeModel.find({ user: userId }).populate('user')
-    return result;
+    const searchFilter = query
+        ? {
+            user: new Types.ObjectId(userId), // Filter by user ID
+            $or: [
+                { title: { $regex: query, $options: 'i' } }, // Case-insensitive title search
+                { desc: { $regex: query, $options: 'i' } }    // Case-insensitive description search
+            ]
+        } : {
+            user: new Types.ObjectId(userId)
+        }
+
+    // Calculate pagination values
+    const skip = (page - 1) * limit;
+
+    const result = await RecipeModel.find(searchFilter)
+        .skip(skip)
+        .limit(limit)
+        .populate('user')
+
+    // Get total count for pagination purposes
+    const totalRecipes = await RecipeModel.countDocuments(searchFilter);
+
+    return { result, totalRecipes };
 };
 
 const deleteRecipeFromDB = async (id: string) => {

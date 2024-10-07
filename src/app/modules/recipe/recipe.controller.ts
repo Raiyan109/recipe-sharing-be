@@ -70,12 +70,14 @@ const getSingleRecipe = catchAsync(async (req, res) => {
 
 const getRecipesByUser = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
+    const { query = "", page = "1", limit = "10" } = req.query;
 
-    const result = await RecipeServices.getRecipesByUserFromDB(userId);
+    const result = await RecipeServices.getRecipesByUserFromDB(userId, query as string, parseInt(page as string), parseInt(limit as string));
 
 
     // Check if the database collection is empty or no matching data is found
-    if (!result || result.length === 0) {
+
+    if (!result.result || result.result.length === 0) {
         return sendResponse(res, {
             success: false,
             statusCode: httpStatus.NOT_FOUND,
@@ -88,7 +90,12 @@ const getRecipesByUser = catchAsync(async (req, res) => {
         success: true,
         statusCode: httpStatus.OK,
         message: 'Recipes retrieved successfully',
-        data: result,
+        data: result.result,
+        meta: {
+            total: result.totalRecipes,
+            currentPage: Number(page),
+            totalPages: Math.ceil(result.totalRecipes / Number(limit)),
+        },
     });
 });
 
