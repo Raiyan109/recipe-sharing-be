@@ -39,10 +39,24 @@ const getAllCategoriesFromDB = async (): Promise<CategoryItem[]> => {
 
 
 const getAllRecipesFromDB = async () => {
-    const result = await RecipeModel.find().populate('user').populate({
-        path: 'reviews.user',
-        select: 'name photo _id',
-    })
+    const result = await RecipeModel.aggregate([
+        {
+            $addFields: {
+                voteCount: { $size: "$votes" } // Adds a field with the count of votes
+            }
+        },
+        { $sort: { voteCount: -1 } }, // Sort by vote count in descending order
+        { $lookup: { from: 'users', localField: 'user', foreignField: '_id', as: 'user' } },
+        { $unwind: '$user' },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'reviews.user',
+                foreignField: '_id',
+                as: 'reviews.user'
+            }
+        }
+    ]);
 
     return result;
 };

@@ -123,7 +123,6 @@ const upvote = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
     const { recipeId } = req.params;
 
-
     const result = await RecipeServices.addUpvoteIntoRecipe(userId, recipeId);
 
     sendResponse(res, {
@@ -137,8 +136,6 @@ const upvote = catchAsync(async (req, res) => {
 const downvote = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
     const { recipeId } = req.params;
-
-
     const result = await RecipeServices.addDownvoteIntoRecipe(userId, recipeId);
 
     sendResponse(res, {
