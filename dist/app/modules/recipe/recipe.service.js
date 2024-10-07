@@ -16,6 +16,7 @@ exports.RecipeServices = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const recipe_model_1 = require("./recipe.model");
+const mongoose_1 = require("mongoose");
 const createRecipeIntoDB = (recipe) => __awaiter(void 0, void 0, void 0, function* () {
     const isRecipeExists = yield recipe_model_1.RecipeModel.findOne({ name: recipe.title });
     if (isRecipeExists) {
@@ -62,9 +63,26 @@ const getSingleRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function
     const result = yield recipe_model_1.RecipeModel.findById(id).populate('user');
     return result;
 });
-const getRecipesByUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield recipe_model_1.RecipeModel.find({ user: userId }).populate('user');
-    return result;
+const getRecipesByUserFromDB = (userId_1, ...args_1) => __awaiter(void 0, [userId_1, ...args_1], void 0, function* (userId, query = '', page = 1, limit = 2) {
+    const searchFilter = query
+        ? {
+            user: new mongoose_1.Types.ObjectId(userId), // Filter by user ID
+            $or: [
+                { title: { $regex: query, $options: 'i' } }, // Case-insensitive title search
+                { desc: { $regex: query, $options: 'i' } } // Case-insensitive description search
+            ]
+        } : {
+        user: new mongoose_1.Types.ObjectId(userId)
+    };
+    // Calculate pagination values
+    const skip = (page - 1) * limit;
+    const result = yield recipe_model_1.RecipeModel.find(searchFilter)
+        .skip(skip)
+        .limit(limit)
+        .populate('user');
+    // Get total count for pagination purposes
+    const totalRecipes = yield recipe_model_1.RecipeModel.countDocuments(searchFilter);
+    return { result, totalRecipes };
 });
 const deleteRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield recipe_model_1.RecipeModel.findByIdAndDelete(id, {

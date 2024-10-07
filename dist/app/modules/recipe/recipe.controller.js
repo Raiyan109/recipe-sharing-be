@@ -75,9 +75,10 @@ const getSingleRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
 const getRecipesByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
-    const result = yield recipe_service_1.RecipeServices.getRecipesByUserFromDB(userId);
+    const { query = "", page = "1", limit = "2" } = req.query;
+    const result = yield recipe_service_1.RecipeServices.getRecipesByUserFromDB(userId, query, parseInt(page), parseInt(limit));
     // Check if the database collection is empty or no matching data is found
-    if (!result || result.length === 0) {
+    if (!result.result || result.result.length === 0) {
         return (0, sendResponse_1.default)(res, {
             success: false,
             statusCode: http_status_1.default.NOT_FOUND,
@@ -89,7 +90,12 @@ const getRecipesByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         success: true,
         statusCode: http_status_1.default.OK,
         message: 'Recipes retrieved successfully',
-        data: result,
+        data: result.result,
+        meta: {
+            total: result.totalRecipes,
+            currentPage: Number(page),
+            totalPages: Math.ceil(result.totalRecipes / Number(limit)),
+        },
     });
 }));
 const deleteRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
