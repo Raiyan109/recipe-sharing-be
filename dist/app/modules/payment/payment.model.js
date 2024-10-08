@@ -1,9 +1,10 @@
-import { Schema, model } from "mongoose";
-import { TPayment } from "./payment.interface";
-
-const paymentSchema = new Schema<TPayment>({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PaymentModel = void 0;
+const mongoose_1 = require("mongoose");
+const paymentSchema = new mongoose_1.Schema({
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: 'User',
         // required: true
     },
@@ -11,7 +12,7 @@ const paymentSchema = new Schema<TPayment>({
         type: Number,
     },
     recipe: {
-        type: Schema.Types.ObjectId,
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Recipe',
     },
     status: {
@@ -28,6 +29,5 @@ const paymentSchema = new Schema<TPayment>({
         type: String,
         required: true
     },
-}, { timestamps: true })
-
-export const PaymentModel = model<TPayment>('Payment', paymentSchema)
+}, { timestamps: true });
+exports.PaymentModel = (0, mongoose_1.model)('Payment', paymentSchema);

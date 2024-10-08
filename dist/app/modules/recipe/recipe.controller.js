@@ -75,7 +75,7 @@ const getSingleRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
 const getRecipesByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
-    const { query = "", page = "1", limit = "2" } = req.query;
+    const { query = "", page = "1", limit = "10" } = req.query;
     const result = yield recipe_service_1.RecipeServices.getRecipesByUserFromDB(userId, query, parseInt(page), parseInt(limit));
     // Check if the database collection is empty or no matching data is found
     if (!result.result || result.result.length === 0) {

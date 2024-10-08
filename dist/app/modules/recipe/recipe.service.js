@@ -63,7 +63,7 @@ const getSingleRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function
     const result = yield recipe_model_1.RecipeModel.findById(id).populate('user');
     return result;
 });
-const getRecipesByUserFromDB = (userId_1, ...args_1) => __awaiter(void 0, [userId_1, ...args_1], void 0, function* (userId, query = '', page = 1, limit = 2) {
+const getRecipesByUserFromDB = (userId_1, ...args_1) => __awaiter(void 0, [userId_1, ...args_1], void 0, function* (userId, query = '', page = 1, limit = 10) {
     const searchFilter = query
         ? {
             user: new mongoose_1.Types.ObjectId(userId), // Filter by user ID
