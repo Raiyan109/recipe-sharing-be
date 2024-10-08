@@ -27,6 +27,8 @@ router.get(
     UserControllers.getSingleUser,
 );
 
+router.delete('/:id', auth('admin'), UserControllers.deleteUser);
+
 router.post(
     '/signup',
     // validateRequest(UserValidations.userValidationSchema),

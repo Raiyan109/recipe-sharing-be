@@ -16,7 +16,7 @@ recipe_controller_1.RecipeControllers.createRecipe);
 router.post('/:recipeId/review', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.addReview);
 router.get('/categories', recipe_controller_1.RecipeControllers.getAllCategories);
 router.get('/user', (0, auth_1.default)('user'), recipe_controller_1.RecipeControllers.getRecipesByUser);
-router.delete('/:id', (0, auth_1.default)('user'), recipe_controller_1.RecipeControllers.deleteRecipe);
+router.delete('/:id', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.deleteRecipe);
 router.delete("/:recipeId/review/:reviewId", (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.deleteReview);
 router.get('/:id', 
 // auth('user', 'admin'),

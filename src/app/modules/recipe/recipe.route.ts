@@ -43,7 +43,7 @@ router.get(
     RecipeControllers.getRecipesByUser,
 );
 
-router.delete('/:id', auth('user'), RecipeControllers.deleteRecipe);
+router.delete('/:id', auth('user', 'admin'), RecipeControllers.deleteRecipe);
 
 router.delete("/:recipeId/review/:reviewId", auth('user', 'admin'), RecipeControllers.deleteReview);
 

@@ -203,6 +203,16 @@ const updateProfileIntoDB = async (id: string, payload: Partial<TUser>) => {
     }
 };
 
+const deleteUserFromDB = async (id: string) => {
+    const result = await User.findByIdAndDelete(
+        id,
+        {
+            new: true,
+        },
+    );
+    return result;
+};
+
 
 export const UserServices = {
     createUserIntoDB,
@@ -213,5 +223,6 @@ export const UserServices = {
     getAllUsersFromDB,
     updateUserIsBlockedIntoDB,
     updateProfileIntoDB,
-    getSingleUserFromDB
+    getSingleUserFromDB,
+    deleteUserFromDB
 }

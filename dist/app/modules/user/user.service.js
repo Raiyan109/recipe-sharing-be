@@ -164,6 +164,12 @@ const updateProfileIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update profile');
     }
 });
+const deleteUserFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findByIdAndDelete(id, {
+        new: true,
+    });
+    return result;
+});
 exports.UserServices = {
     createUserIntoDB,
     login,
@@ -173,5 +179,6 @@ exports.UserServices = {
     getAllUsersFromDB,
     updateUserIsBlockedIntoDB,
     updateProfileIntoDB,
-    getSingleUserFromDB
+    getSingleUserFromDB,
+    deleteUserFromDB
 };
