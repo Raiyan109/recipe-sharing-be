@@ -22,7 +22,6 @@ const createPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     const user = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
     const { recipe } = req.params;
     const { payableAmount } = req.body;
-    console.log(user, recipe, payableAmount, 'payableAmount');
     const result = yield payment_service_1.PaymentServices.createPaymentIntoDB(user, payableAmount, recipe);
     (0, sendResponse_1.default)(res, {
         success: true,

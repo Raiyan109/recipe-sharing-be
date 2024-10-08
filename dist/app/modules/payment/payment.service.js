@@ -52,7 +52,15 @@ const confirmationService = (transactionId, status) => __awaiter(void 0, void 0,
         result = yield payment_model_1.PaymentModel.findOneAndUpdate({ transactionId }, {
             paymentStatus: 'Paid'
         });
-        message = "Successfully Paid!";
+        const payment = yield payment_model_1.PaymentModel.findOne({ transactionId });
+        if (payment) {
+            // Update user's membership to "premium"
+            yield user_model_1.User.findByIdAndUpdate(payment.user, { membership: 'premium' });
+            message = "Membership upgraded to premium successfully!";
+        }
+        else {
+            message = "Payment record not found!";
+        }
     }
     else {
         message = "Payment Failed!";

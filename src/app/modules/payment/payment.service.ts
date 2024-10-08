@@ -48,7 +48,15 @@ const confirmationService = async (transactionId: string, status: string) => {
         result = await PaymentModel.findOneAndUpdate({ transactionId }, {
             paymentStatus: 'Paid'
         });
-        message = "Successfully Paid!"
+        const payment = await PaymentModel.findOne({ transactionId });
+
+        if (payment) {
+            // Update user's membership to "premium"
+            await User.findByIdAndUpdate(payment.user, { membership: 'premium' });
+            message = "Membership upgraded to premium successfully!";
+        } else {
+            message = "Payment record not found!";
+        }
     }
     else {
         message = "Payment Failed!"

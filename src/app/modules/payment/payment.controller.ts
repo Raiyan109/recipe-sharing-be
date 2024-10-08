@@ -7,8 +7,6 @@ const createPayment = catchAsync(async (req, res) => {
     const user = req.user?.userId?._id
     const { recipe } = req.params;
     const { payableAmount } = req.body
-    console.log(user, recipe, payableAmount, 'payableAmount');
-
 
     const result = await PaymentServices.createPaymentIntoDB(user, payableAmount, recipe);
 
