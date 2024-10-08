@@ -49,14 +49,14 @@ const getAllRecipesFromDB = async () => {
         { $sort: { voteCount: -1 } }, // Sort by vote count in descending order
         { $lookup: { from: 'users', localField: 'user', foreignField: '_id', as: 'user' } },
         { $unwind: '$user' },
-        {
-            $lookup: {
-                from: 'users',
-                localField: 'reviews.user',
-                foreignField: '_id',
-                as: 'reviews.user'
-            }
-        }
+        // {
+        //     $lookup: {
+        //         from: 'users',
+        //         localField: 'reviews.user',
+        //         foreignField: '_id',
+        //         as: 'reviews.user'
+        //     }
+        // }
     ]);
 
     return result;
@@ -126,6 +126,20 @@ const addReviewIntoRecipe = async (recipeId: string, userId: string, payload: IR
     return result;
 }
 
+const deleteReviewFromRecipe = async (reviewId: string, recipeId: string) => {
+    const updatedRecipe = await RecipeModel.findByIdAndUpdate(
+        recipeId,
+        { $pull: { reviews: { _id: reviewId } } },
+        { new: true }
+    );
+
+    if (!updatedRecipe) {
+        throw new AppError(httpStatus.NOT_FOUND, "Recipe or review not found");
+    }
+
+    return updatedRecipe
+};
+
 const addUpvoteIntoRecipe = async (userId: string, recipeId: string) => {
     const upvote = await RecipeModel.findByIdAndUpdate(recipeId, {
         $push: {
@@ -157,5 +171,6 @@ export const RecipeServices = {
     deleteRecipeFromDB,
     addReviewIntoRecipe,
     addUpvoteIntoRecipe,
-    addDownvoteIntoRecipe
+    addDownvoteIntoRecipe,
+    deleteReviewFromRecipe
 }

@@ -120,6 +120,16 @@ const addReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         data: result,
     });
 }));
+const deleteReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { reviewId, recipeId } = req.params;
+    const result = yield recipe_service_1.RecipeServices.deleteReviewFromRecipe(reviewId, recipeId);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Review deleted successfully',
+        data: result,
+    });
+}));
 const upvote = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _e, _f;
     const userId = (_f = (_e = req.user) === null || _e === void 0 ? void 0 : _e.userId) === null || _f === void 0 ? void 0 : _f._id;
@@ -152,6 +162,7 @@ exports.RecipeControllers = {
     getAllCategories,
     deleteRecipe,
     addReview,
+    deleteReview,
     upvote,
     downvote
 };

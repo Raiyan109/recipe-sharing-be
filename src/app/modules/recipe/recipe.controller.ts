@@ -126,6 +126,18 @@ const addReview = catchAsync(async (req, res) => {
     });
 })
 
+const deleteReview = catchAsync(async (req, res) => {
+    const { reviewId, recipeId } = req.params;
+    const result = await RecipeServices.deleteReviewFromRecipe(reviewId, recipeId);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Review deleted successfully',
+        data: result,
+    });
+});
+
 const upvote = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
     const { recipeId } = req.params;
@@ -162,6 +174,7 @@ export const RecipeControllers = {
     getAllCategories,
     deleteRecipe,
     addReview,
+    deleteReview,
     upvote,
     downvote
 }

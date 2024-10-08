@@ -48,14 +48,14 @@ const getAllRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* ()
         { $sort: { voteCount: -1 } }, // Sort by vote count in descending order
         { $lookup: { from: 'users', localField: 'user', foreignField: '_id', as: 'user' } },
         { $unwind: '$user' },
-        {
-            $lookup: {
-                from: 'users',
-                localField: 'reviews.user',
-                foreignField: '_id',
-                as: 'reviews.user'
-            }
-        }
+        // {
+        //     $lookup: {
+        //         from: 'users',
+        //         localField: 'reviews.user',
+        //         foreignField: '_id',
+        //         as: 'reviews.user'
+        //     }
+        // }
     ]);
     return result;
 });
@@ -107,6 +107,13 @@ const addReviewIntoRecipe = (recipeId, userId, payload) => __awaiter(void 0, voi
     const result = yield recipe.save(); // Use save to update the existing document
     return result;
 });
+const deleteReviewFromRecipe = (reviewId, recipeId) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedRecipe = yield recipe_model_1.RecipeModel.findByIdAndUpdate(recipeId, { $pull: { reviews: { _id: reviewId } } }, { new: true });
+    if (!updatedRecipe) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Recipe or review not found");
+    }
+    return updatedRecipe;
+});
 const addUpvoteIntoRecipe = (userId, recipeId) => __awaiter(void 0, void 0, void 0, function* () {
     const upvote = yield recipe_model_1.RecipeModel.findByIdAndUpdate(recipeId, {
         $push: {
@@ -136,5 +143,6 @@ exports.RecipeServices = {
     deleteRecipeFromDB,
     addReviewIntoRecipe,
     addUpvoteIntoRecipe,
-    addDownvoteIntoRecipe
+    addDownvoteIntoRecipe,
+    deleteReviewFromRecipe
 };

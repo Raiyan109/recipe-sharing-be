@@ -45,6 +45,8 @@ router.get(
 
 router.delete('/:id', auth('user'), RecipeControllers.deleteRecipe);
 
+router.delete("/:recipeId/review/:reviewId", auth('user', 'admin'), RecipeControllers.deleteReview);
+
 router.get(
     '/:id',
     // auth('user', 'admin'),
