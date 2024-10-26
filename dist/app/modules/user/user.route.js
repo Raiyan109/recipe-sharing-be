@@ -9,6 +9,7 @@ const user_controller_1 = require("./user.controller");
 const auth_1 = __importDefault(require("../../middlewares/auth"));
 const router = express_1.default.Router();
 router.get('/user', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getUser);
+router.get('/growth', (0, auth_1.default)('admin'), user_controller_1.UserControllers.getUserGrowth);
 router.put('/:id', (0, auth_1.default)('admin'), user_controller_1.UserControllers.updateUserIsBlocked);
 router.put('/updateProfile/:id', (0, auth_1.default)('admin', 'user'), user_controller_1.UserControllers.updateProfile);
 router.get('/:id', (0, auth_1.default)('user', 'admin'), user_controller_1.UserControllers.getSingleUser);

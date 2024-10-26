@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/user', auth('user', 'admin'), UserControllers.getUser)
 
+router.get('/growth', auth('admin'), UserControllers.getUserGrowth);
+
 router.put(
     '/:id',
     auth('admin'),

@@ -27,6 +27,16 @@ const recipeSchema = new Schema<TRecipe>({
             comment: {
                 type: String
             },
+            // commentedAt: {
+            //     type: Date,
+            //     default: Date.now()
+            // },
+            // parentComment: {
+            //     type: String
+            // },
+            // replies: {
+            //     type: String
+            // },
         }
     ],
     contentAvailability: {

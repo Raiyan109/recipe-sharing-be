@@ -61,6 +61,7 @@ const resetPassword = catchAsync(async (req, res) => {
     });
 });
 
+// Get current user
 const getUser = catchAsync(async (req, res) => {
     const userId = req.user?.userId?._id
     const result = await UserServices.getUserFromDB(userId)
@@ -84,6 +85,7 @@ const getAllUsers = catchAsync(async (req, res) => {
     });
 })
 
+// Get any single user
 const getSingleUser = catchAsync(async (req, res) => {
     const { id } = req.params;
     const result = await UserServices.getSingleUserFromDB(id)
@@ -94,6 +96,17 @@ const getSingleUser = catchAsync(async (req, res) => {
         data: result,
     });
 })
+
+const getUserGrowth = catchAsync(async (req, res) => {
+    const result = await UserServices.getUserGrowthFromDB();
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'User growth data retrieved successfully',
+        data: result,
+    });
+});
 
 const updateUserIsBlocked = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -144,5 +157,6 @@ export const UserControllers = {
     updateUserIsBlocked,
     updateProfile,
     getSingleUser,
-    deleteUser
+    deleteUser,
+    getUserGrowth
 }

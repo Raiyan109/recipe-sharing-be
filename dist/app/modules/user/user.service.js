@@ -119,6 +119,28 @@ const getSingleUserFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
     const result = yield user_model_1.User.findById(id).select('-role -membership -password');
     return result;
 });
+const getUserGrowthFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    // Aggregate users by month and count them
+    const growthData = yield user_model_1.User.aggregate([
+        {
+            $group: {
+                _id: {
+                    year: { $year: "$createdAt" },
+                    month: { $month: "$createdAt" },
+                },
+                userCount: { $sum: 1 },
+            },
+        },
+        {
+            $sort: { "_id.year": 1, "_id.month": 1 },
+        },
+    ]);
+    console.log(growthData);
+    return growthData.map(data => ({
+        date: `${data._id.year}-${String(data._id.month).padStart(2, '0')}-01`,
+        users: data.userCount,
+    }));
+});
 const updateUserIsBlockedIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const isBlockedStatus = yield user_model_1.User.findByIdAndUpdate(id, payload, {
@@ -180,5 +202,6 @@ exports.UserServices = {
     updateUserIsBlockedIntoDB,
     updateProfileIntoDB,
     getSingleUserFromDB,
-    deleteUserFromDB
+    deleteUserFromDB,
+    getUserGrowthFromDB
 };

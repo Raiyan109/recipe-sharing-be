@@ -151,6 +151,31 @@ const getSingleUserFromDB = async (id: string) => {
     return result
 }
 
+const getUserGrowthFromDB = async () => {
+    // Aggregate users by month and count them
+    const growthData = await User.aggregate([
+        {
+            $group: {
+                _id: {
+                    year: { $year: "$createdAt" },
+                    month: { $month: "$createdAt" },
+                },
+                userCount: { $sum: 1 },
+            },
+        },
+        {
+            $sort: { "_id.year": 1, "_id.month": 1 },
+        },
+    ]);
+    console.log(growthData);
+
+
+    return growthData.map(data => ({
+        date: `${data._id.year}-${String(data._id.month).padStart(2, '0')}-01`,
+        users: data.userCount,
+    }));
+};
+
 const updateUserIsBlockedIntoDB = async (id: string, payload: Partial<TUser>) => {
     try {
         const isBlockedStatus = await User.findByIdAndUpdate(id, payload, {
@@ -224,5 +249,6 @@ export const UserServices = {
     updateUserIsBlockedIntoDB,
     updateProfileIntoDB,
     getSingleUserFromDB,
-    deleteUserFromDB
+    deleteUserFromDB,
+    getUserGrowthFromDB
 }

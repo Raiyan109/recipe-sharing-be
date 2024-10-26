@@ -67,6 +67,7 @@ const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+// Get current user
 const getUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b, _c;
     const userId = (_c = (_b = req.user) === null || _b === void 0 ? void 0 : _b.userId) === null || _c === void 0 ? void 0 : _c._id;
@@ -87,6 +88,7 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result,
     });
 }));
+// Get any single user
 const getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield user_service_1.UserServices.getSingleUserFromDB(id);
@@ -94,6 +96,15 @@ const getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         success: true,
         statusCode: http_status_1.default.OK,
         message: 'Single User retrieved successfully',
+        data: result,
+    });
+}));
+const getUserGrowth = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_service_1.UserServices.getUserGrowthFromDB();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'User growth data retrieved successfully',
         data: result,
     });
 }));
@@ -138,5 +149,6 @@ exports.UserControllers = {
     updateUserIsBlocked,
     updateProfile,
     getSingleUser,
-    deleteUser
+    deleteUser,
+    getUserGrowth
 };
