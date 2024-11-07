@@ -10,4 +10,7 @@ const payment_controller_1 = require("./payment.controller");
 const router = express_1.default.Router();
 router.post('/confirmation', payment_controller_1.PaymentControllers.confirmationController);
 router.post('/:recipe', (0, auth_1.default)('admin', 'user'), payment_controller_1.PaymentControllers.createPayment);
+// In PaymentRoutes file
+router.post('/general-subscription', // New route for general subscriptions
+(0, auth_1.default)('admin', 'user'), payment_controller_1.PaymentControllers.createGeneralSubscriptionPayment);
 exports.PaymentRoutes = router;

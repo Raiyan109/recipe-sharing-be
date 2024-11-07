@@ -5,13 +5,13 @@ import { initialPayment, verifyPayment } from "./payment.utils";
 import { join } from "path";
 import { readFileSync } from "fs";
 
-const createPaymentIntoDB = async (user: string, payableAmount: number, recipe: string) => {
+const createPaymentIntoDB = async (user: string, payableAmount: number, recipe: string | null) => {
     const transactionId = `TXN-${Date.now()}`;
 
     const result = await PaymentModel.create({
         user,
         payableAmount,
-        recipe,
+        recipe: recipe || "General Subscription",
         status: 'Pending',
         paymentStatus: 'Pending',
         transactionId

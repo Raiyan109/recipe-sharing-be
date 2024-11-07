@@ -12,6 +12,12 @@ router.post(
     PaymentControllers.createPayment,
 );
 
+// In PaymentRoutes file
+router.post(
+    '/general-subscription',  // New route for general subscriptions
+    auth('admin', 'user'),
+    PaymentControllers.createGeneralSubscriptionPayment,
+);
 
 
 

@@ -18,6 +18,22 @@ const createPayment = catchAsync(async (req, res) => {
     });
 });
 
+const createGeneralSubscriptionPayment = catchAsync(async (req, res) => {
+    const user = req.user?.userId?._id;
+    const { payableAmount } = req.body;
+
+    // Call createPaymentIntoDB without `recipe` for general subscriptions
+    const result = await PaymentServices.createPaymentIntoDB(user, payableAmount, null);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Subscription payment initiated successfully',
+        data: result,
+    });
+});
+
+
 const confirmationController = catchAsync(async (req, res) => {
     const { transactionId, status } = req.query;
 
@@ -28,5 +44,6 @@ const confirmationController = catchAsync(async (req, res) => {
 
 export const PaymentControllers = {
     createPayment,
-    confirmationController
+    confirmationController,
+    createGeneralSubscriptionPayment
 }

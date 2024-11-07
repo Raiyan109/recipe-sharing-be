@@ -30,6 +30,19 @@ const createPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+const createGeneralSubscriptionPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const user = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
+    const { payableAmount } = req.body;
+    // Call createPaymentIntoDB without `recipe` for general subscriptions
+    const result = yield payment_service_1.PaymentServices.createPaymentIntoDB(user, payableAmount, null);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Subscription payment initiated successfully',
+        data: result,
+    });
+}));
 const confirmationController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { transactionId, status } = req.query;
     const result = yield payment_service_1.PaymentServices.confirmationService(transactionId, status);
@@ -37,5 +50,6 @@ const confirmationController = (0, catchAsync_1.default)((req, res) => __awaiter
 }));
 exports.PaymentControllers = {
     createPayment,
-    confirmationController
+    confirmationController,
+    createGeneralSubscriptionPayment
 };

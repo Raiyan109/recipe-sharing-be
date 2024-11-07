@@ -109,8 +109,8 @@ const deleteRecipe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     });
 }));
 const addReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d;
-    const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.userId) === null || _d === void 0 ? void 0 : _d._id;
+    var _a, _b;
+    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
     const { recipeId } = req.params;
     const result = yield recipe_service_1.RecipeServices.addReviewIntoRecipe(recipeId, userId, req.body);
     (0, sendResponse_1.default)(res, {
@@ -131,8 +131,8 @@ const deleteReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     });
 }));
 const upvote = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e, _f;
-    const userId = (_f = (_e = req.user) === null || _e === void 0 ? void 0 : _e.userId) === null || _f === void 0 ? void 0 : _f._id;
+    var _a, _b;
+    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
     const { recipeId } = req.params;
     const result = yield recipe_service_1.RecipeServices.addUpvoteIntoRecipe(userId, recipeId);
     (0, sendResponse_1.default)(res, {
@@ -143,8 +143,8 @@ const upvote = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0,
     });
 }));
 const downvote = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _g, _h;
-    const userId = (_h = (_g = req.user) === null || _g === void 0 ? void 0 : _g.userId) === null || _h === void 0 ? void 0 : _h._id;
+    var _a, _b;
+    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
     const { recipeId } = req.params;
     const result = yield recipe_service_1.RecipeServices.addDownvoteIntoRecipe(userId, recipeId);
     (0, sendResponse_1.default)(res, {

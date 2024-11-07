@@ -69,8 +69,8 @@ const resetPassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 }));
 // Get current user
 const getUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c;
-    const userId = (_c = (_b = req.user) === null || _b === void 0 ? void 0 : _b.userId) === null || _c === void 0 ? void 0 : _c._id;
+    var _a, _b;
+    const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
     const result = yield user_service_1.UserServices.getUserFromDB(userId);
     (0, sendResponse_1.default)(res, {
         success: true,
