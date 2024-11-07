@@ -11,7 +11,8 @@ const createPaymentIntoDB = async (user: string, payableAmount: number, recipe: 
     const result = await PaymentModel.create({
         user,
         payableAmount,
-        recipe: recipe || "General Subscription",
+        recipe: recipe || undefined, // Pass `undefined` if recipe is null
+        type: recipe ? 'recipe' : 'general',
         status: 'Pending',
         paymentStatus: 'Pending',
         transactionId

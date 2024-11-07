@@ -20,7 +20,8 @@ const createPaymentIntoDB = (user, payableAmount, recipe) => __awaiter(void 0, v
     const result = yield payment_model_1.PaymentModel.create({
         user,
         payableAmount,
-        recipe: recipe || "General Subscription",
+        recipe: recipe || undefined, // Pass `undefined` if recipe is null
+        type: recipe ? 'recipe' : 'general',
         status: 'Pending',
         paymentStatus: 'Pending',
         transactionId

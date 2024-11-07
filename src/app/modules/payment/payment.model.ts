@@ -13,6 +13,12 @@ const paymentSchema = new Schema<TPayment>({
     recipe: {
         type: Schema.Types.ObjectId,
         ref: 'Recipe',
+        required: function () { return this.type === 'recipe'; }, // Only required for recipe payments
+    },
+    type: {
+        type: String,
+        enum: ['general', 'recipe'], // Distinguish payment type
+        default: 'general',
     },
     status: {
         type: String,
