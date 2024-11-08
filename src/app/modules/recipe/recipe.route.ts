@@ -48,16 +48,26 @@ router.delete('/:id', auth('user', 'admin'), RecipeControllers.deleteRecipe);
 router.delete("/:recipeId/review/:reviewId", auth('user', 'admin'), RecipeControllers.deleteReview);
 
 router.get(
+    '/latest',
+    // auth('user', 'admin'),
+    RecipeControllers.getLatestRecipes,
+);
+
+router.get(
     '/:id',
     // auth('user', 'admin'),
     RecipeControllers.getSingleRecipe,
 );
+
+
 
 router.get(
     '/',
     // auth('user', 'admin'),
     RecipeControllers.getAllRecipes,
 );
+
+
 
 
 

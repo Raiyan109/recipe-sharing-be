@@ -32,8 +32,8 @@ const followUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     });
 }));
 const unFollowUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    const followerId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
+    var _c, _d;
+    const followerId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.userId) === null || _d === void 0 ? void 0 : _d._id;
     const { followeeId } = req.params;
     const result = yield follow_service_1.FollowServices.unFollowUser(followerId, followeeId);
     (0, sendResponse_1.default)(res, {

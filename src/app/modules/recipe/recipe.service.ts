@@ -62,6 +62,12 @@ const getAllRecipesFromDB = async () => {
     return result;
 };
 
+const getLatestRecipesFromDB = async () => {
+    const result = await RecipeModel.find().sort({ createdAt: -1 })
+
+    return result;
+};
+
 const getSingleRecipeFromDB = async (id: string) => {
     const result = await RecipeModel.findById(id).populate('user')
     return result
@@ -172,5 +178,6 @@ export const RecipeServices = {
     addReviewIntoRecipe,
     addUpvoteIntoRecipe,
     addDownvoteIntoRecipe,
-    deleteReviewFromRecipe
+    deleteReviewFromRecipe,
+    getLatestRecipesFromDB
 }

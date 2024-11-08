@@ -59,6 +59,10 @@ const getAllRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* ()
     ]);
     return result;
 });
+const getLatestRecipesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield recipe_model_1.RecipeModel.find().sort({ createdAt: -1 });
+    return result;
+});
 const getSingleRecipeFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield recipe_model_1.RecipeModel.findById(id).populate('user');
     return result;
@@ -144,5 +148,6 @@ exports.RecipeServices = {
     addReviewIntoRecipe,
     addUpvoteIntoRecipe,
     addDownvoteIntoRecipe,
-    deleteReviewFromRecipe
+    deleteReviewFromRecipe,
+    getLatestRecipesFromDB
 };

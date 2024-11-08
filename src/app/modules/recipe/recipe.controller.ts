@@ -57,6 +57,27 @@ const getAllRecipes = catchAsync(async (req, res) => {
     });
 });
 
+const getLatestRecipes = catchAsync(async (req, res) => {
+    const result = await RecipeServices.getLatestRecipesFromDB();
+
+    // Check if the database collection is empty or no matching data is found
+    if (!result || result.length === 0) {
+        return sendResponse(res, {
+            success: false,
+            statusCode: httpStatus.NOT_FOUND,
+            message: 'No data found.',
+            data: [],
+        });
+    }
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: 'Recipes retrieved successfully',
+        data: result,
+    });
+});
+
 const getSingleRecipe = catchAsync(async (req, res) => {
     const { id } = req.params;
     const result = await RecipeServices.getSingleRecipeFromDB(id)
@@ -176,5 +197,6 @@ export const RecipeControllers = {
     addReview,
     deleteReview,
     upvote,
-    downvote
+    downvote,
+    getLatestRecipes
 }

@@ -31,8 +31,8 @@ const createPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 const createGeneralSubscriptionPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    const user = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId) === null || _b === void 0 ? void 0 : _b._id;
+    var _c, _d;
+    const user = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.userId) === null || _d === void 0 ? void 0 : _d._id;
     const { payableAmount } = req.body;
     // Call createPaymentIntoDB without `recipe` for general subscriptions
     const result = yield payment_service_1.PaymentServices.createPaymentIntoDB(user, payableAmount, null);
