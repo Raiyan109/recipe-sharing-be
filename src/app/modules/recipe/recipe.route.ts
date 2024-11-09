@@ -3,6 +3,7 @@ import validateRequest from '../../middlewares/validateRequest';
 
 import auth from '../../middlewares/auth';
 import { RecipeControllers } from './recipe.controller';
+import { multerUpload } from '../../config/multer.config';
 
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.put(
 
 router.post(
     '/',
+    multerUpload.single('image'),
     // auth('admin'),
     RecipeControllers.createRecipe,
 );
