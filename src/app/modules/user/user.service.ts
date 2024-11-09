@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-import { TLoginUser, TUser } from "./user.interface";
+import { TLoginUser, TUser, TUserQuery } from "./user.interface";
 import { User } from './user.model'
 import { createToken } from "./user.utils";
 import config from "../../config";
@@ -141,8 +141,26 @@ const getUserFromDB = async (payload: TUser) => {
     return user
 };
 
-const getAllUsersFromDB = async () => {
-    const user = await User.find()
+const getAllUsersFromDB = async (query: TUserQuery) => {
+
+    const { role, membership, sortBy } = query;
+
+    // Build the filter object based on query parameters
+    const filter: any = {};
+    if (role) filter.role = role;
+    if (membership) filter.membership = membership;
+
+    // Sort users if sortBy is provided, default to sorting by creation date
+    const sortOptions: any = {};
+    if (sortBy) {
+        const [key, order] = sortBy.split(':');
+        sortOptions[key] = order === 'desc' ? -1 : 1;
+    } else {
+        sortOptions.createdAt = -1; // Default sort by created date descending
+    }
+
+
+    const user = await User.find(filter).sort(sortOptions)
     return user
 };
 

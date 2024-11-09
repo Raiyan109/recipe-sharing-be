@@ -14,4 +14,7 @@ exports.default = {
     jwt_secret: process.env.JWT_SECRET,
     jwt_secret_expires_in: process.env.JWT_SECRET_EXPIRES_IN,
     reset_pass_ui_link: process.env.RESET_PASSWORD_UI_LINK,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    cloud_api_key: process.env.CLOUDINARY_API_KEY,
+    cloud_api_secret: process.env.CLOUDINARY_API_SECRET
 };

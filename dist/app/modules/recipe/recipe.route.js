@@ -7,10 +7,11 @@ exports.RecipeRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const auth_1 = __importDefault(require("../../middlewares/auth"));
 const recipe_controller_1 = require("./recipe.controller");
+const multer_config_1 = require("../../config/multer.config");
 const router = express_1.default.Router();
 router.put('/:recipeId/upvote', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.upvote);
 router.put('/:recipeId/downvote', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.downvote);
-router.post('/', 
+router.post('/', multer_config_1.multerUpload.single('image'), 
 // auth('admin'),
 recipe_controller_1.RecipeControllers.createRecipe);
 router.post('/:recipeId/review', (0, auth_1.default)('user', 'admin'), recipe_controller_1.RecipeControllers.addReview);

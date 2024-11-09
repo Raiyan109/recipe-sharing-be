@@ -22,6 +22,12 @@ export type TLoginUser = {
     password: string;
 };
 
+export type TUserQuery = {
+    role: string;
+    membership: string;
+    sortBy: string
+}
+
 export interface UserModel extends Model<TUser> {
     //instance methods for checking if the user exist
     isUserExistsByEmail(id: string): Promise<TUser>;

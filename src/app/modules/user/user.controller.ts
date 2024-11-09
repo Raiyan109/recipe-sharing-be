@@ -3,6 +3,7 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
 import AppError from "../../errors/AppError";
+import { TUserQuery } from "./user.interface";
 
 const signUp = catchAsync(async (req, res) => {
     const result = await UserServices.createUserIntoDB(req.body)
@@ -75,7 +76,8 @@ const getUser = catchAsync(async (req, res) => {
 })
 
 const getAllUsers = catchAsync(async (req, res) => {
-    const result = await UserServices.getAllUsersFromDB()
+    const query = req.query as unknown as TUserQuery;
+    const result = await UserServices.getAllUsersFromDB(query)
 
     sendResponse(res, {
         success: true,
