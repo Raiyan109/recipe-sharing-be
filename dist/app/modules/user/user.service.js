@@ -111,25 +111,27 @@ const getUserFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* (
     const user = yield user_model_1.User.findOne({ _id: payload });
     return user;
 });
-const getAllUsersFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const { role, membership, sortBy } = query;
-    // Build the filter object based on query parameters
+const getAllUsersFromDB = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (query = {}) {
     const filter = {};
-    if (role)
-        filter.role = role;
-    if (membership)
-        filter.membership = membership;
-    // Sort users if sortBy is provided, default to sorting by creation date
-    const sortOptions = {};
-    if (sortBy) {
-        const [key, order] = sortBy.split(':');
-        sortOptions[key] = order === 'desc' ? -1 : 1;
+    const sort = {};
+    // Apply filters only if they exist
+    if (query.role)
+        filter.role = query.role;
+    if (query.status)
+        filter.status = query.status;
+    // Apply sorting only if it exists
+    if (query.sortBy) {
+        const [key, order] = query.sortBy.split(':');
+        sort[key] = order === 'asc' ? 1 : -1;
     }
-    else {
-        sortOptions.createdAt = -1; // Default sort by created date descending
+    try {
+        const users = yield user_model_1.User.find(filter).sort(sort);
+        return users;
     }
-    const user = yield user_model_1.User.find(filter).sort(sortOptions);
-    return user;
+    catch (error) {
+        console.error("Error querying users:", error);
+        throw error;
+    }
 });
 const getSingleUserFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.User.findById(id).select('-role -membership -password');

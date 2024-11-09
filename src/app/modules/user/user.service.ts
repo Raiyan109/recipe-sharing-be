@@ -141,27 +141,27 @@ const getUserFromDB = async (payload: TUser) => {
     return user
 };
 
-const getAllUsersFromDB = async (query: TUserQuery) => {
-
-    const { role, membership, sortBy } = query;
-
-    // Build the filter object based on query parameters
+const getAllUsersFromDB = async (query: any = {}) => {
     const filter: any = {};
-    if (role) filter.role = role;
-    if (membership) filter.membership = membership;
+    const sort: any = {};
 
-    // Sort users if sortBy is provided, default to sorting by creation date
-    const sortOptions: any = {};
-    if (sortBy) {
-        const [key, order] = sortBy.split(':');
-        sortOptions[key] = order === 'desc' ? -1 : 1;
-    } else {
-        sortOptions.createdAt = -1; // Default sort by created date descending
+    // Apply filters only if they exist
+    if (query.role) filter.role = query.role;
+    if (query.status) filter.status = query.status;
+
+    // Apply sorting only if it exists
+    if (query.sortBy) {
+        const [key, order] = query.sortBy.split(':');
+        sort[key] = order === 'asc' ? 1 : -1;
     }
 
-
-    const user = await User.find(filter).sort(sortOptions)
-    return user
+    try {
+        const users = await User.find(filter).sort(sort);
+        return users;
+    } catch (error) {
+        console.error("Error querying users:", error);
+        throw error;
+    }
 };
 
 const getSingleUserFromDB = async (id: string) => {
