@@ -58,7 +58,11 @@ const recipeSchema = new Schema<TRecipe>({
             type: Schema.Types.ObjectId,
             ref: 'User',
         }
-    ]
+    ],
+    ingredients: {
+        type: [String],
+        required: true
+    },
 }, { timestamps: true })
 
 export const RecipeModel = model<TRecipe>('Recipe', recipeSchema)

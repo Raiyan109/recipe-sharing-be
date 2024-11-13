@@ -17,5 +17,6 @@ export type TRecipe = {
     contentAvailability: 'free' | 'premium'
     user: Types.ObjectId;
     category: [string];
-    votes: [string]
+    votes: [string],
+    ingredients: [string],
 } 
